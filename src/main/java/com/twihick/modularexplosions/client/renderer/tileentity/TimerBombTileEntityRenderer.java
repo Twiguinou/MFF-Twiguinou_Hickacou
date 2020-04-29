@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.util.Direction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,10 +25,15 @@ public class TimerBombTileEntityRenderer extends TileEntityRenderer<TimerBombTil
         BlockState state = bomb.getBlockState();
         if(state.getBlock() instanceof TimerBombBlock) {
             matrix.push();
-            matrix.translate(0.5D, 1.1D, 0.75D);
-            int deg = state.get(TimerBombBlock.DIRECTION).getHorizontalIndex();
+            Direction direction = state.get(TimerBombBlock.DIRECTION);
+            int deg = direction.getHorizontalIndex();
             matrix.rotate(Vector3f.YP.rotationDegrees(-90F*deg+180F));
             matrix.rotate(Vector3f.XP.rotationDegrees(-180F));
+            switch(direction) {
+                case NORTH:
+                    matrix.translate(-0.5D, -0.5D, 0.0D);
+                    break;
+            }
             matrix.scale(0.01F, 0.01F, 0.01F);
             FontRenderer fontRenderer = this.renderDispatcher.fontRenderer;
             fontRenderer.renderString(bomb.getStringFormatted(), (float)(-fontRenderer.getStringWidth(bomb.getStringFormatted())/2), 0, texture, false, matrix.getLast().getMatrix(), buffer, false, 0, light);

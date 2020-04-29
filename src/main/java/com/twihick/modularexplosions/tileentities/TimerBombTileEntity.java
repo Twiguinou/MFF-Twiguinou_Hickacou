@@ -2,6 +2,7 @@ package com.twihick.modularexplosions.tileentities;
 
 import com.twihick.modularexplosions.blocks.TimerBombBlock;
 import com.twihick.modularexplosions.common.registry.TileEntitiesList;
+import com.twihick.modularexplosions.util.world.CustomExplosion;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,7 +10,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.world.Explosion;
 
 import java.util.Random;
 
@@ -32,7 +32,8 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
             }
             if(runningTicks <= 0) {
                 this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-                this.world.createExplosion(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 3.0F, Explosion.Mode.DESTROY);
+                CustomExplosion customExplosion = new CustomExplosion(this.world, this.getPos(), 40, 1.3F);
+                customExplosion.explode();
                 this.remove();
             }
         }
