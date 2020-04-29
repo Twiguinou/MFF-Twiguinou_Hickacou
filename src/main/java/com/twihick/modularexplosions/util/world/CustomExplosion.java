@@ -5,6 +5,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class CustomExplosion {
 
     private final World world;
@@ -20,12 +22,14 @@ public class CustomExplosion {
     }
 
     public void explode() {
+        Random rand = new Random();
         int a = this.radius;
         int b = (int) (this.radius*this.distFactor);
         for(int x = -a; x <= a; x++) {
             for(int y = -b; y <= b; y++) {
                 for(int z = -a; z <= a; z++) {
-                    if(Math.sqrt(Math.pow(x, 2)/Math.pow(a, 2))+Math.sqrt(Math.pow(y, 2)/Math.pow(b, 2))+Math.sqrt(Math.pow(z, 2)/Math.pow(a, 2)) < 1) {
+                    rand.setSeed(42L);
+                    if((Math.pow(x+rand.nextFloat(), 2)/Math.pow(a, 2))+(Math.pow(y+rand.nextFloat(), 2)/Math.pow(b, 2))+(Math.pow(z+rand.nextFloat(), 2)/Math.pow(a, 2)) < 1) {
                         BlockPos aPos = new BlockPos(pos.getX()+x, pos.getY()+y, pos.getZ()+z);
                         BlockState state = world.getBlockState(aPos);
                         if(state != Blocks.AIR.getDefaultState() && state != Blocks.BEDROCK.getDefaultState()) {
