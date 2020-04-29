@@ -31,7 +31,7 @@ public class TimerBombTileEntityRenderer extends TileEntityRenderer<TimerBombTil
             matrix.rotate(Vector3f.XP.rotationDegrees(-180F));
             switch(direction) {
                 case NORTH:
-                    matrix.translate(-0.5D, -0.5D, 0.0D);
+                    matrix.translate(0.0D, -0.5D, -1.05D);
                     break;
             }
             matrix.scale(0.01F, 0.01F, 0.01F);
