@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 public class BlocksList {
 
     public static final Block TIMER_BOMB = RegistryMethods.buildBlock(TimerBombBlock.class, IDS.TIMER_BOMB.getValue(), null);
+    public static final Block REMOTE_BOMB =
 
     @SubscribeEvent
     public static void registerBlocks(final RegistryEvent.Register<Block> event) {
@@ -18,7 +19,8 @@ public class BlocksList {
     }
 
     private enum IDS {
-        TIMER_BOMB("timer_bomb");
+        TIMER_BOMB("timer_bomb"),
+        REMOTE_BOMB("remote_bomb");
 
         private final String value;
         IDS(String label) {

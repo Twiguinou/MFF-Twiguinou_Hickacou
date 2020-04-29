@@ -39,6 +39,9 @@ public class TimerBombTileEntityRenderer extends TileEntityRenderer<TimerBombTil
                 case SOUTH:
                     matrix.translate(-0.5D, -0.55D, 0.0D);
                     break;
+                case WEST:
+                    matrix.translate(-0.5D, -0.55D, -1.0D);
+                    break;
             }
             matrix.scale(0.01F, 0.01F, 0.01F);
             FontRenderer fontRenderer = this.renderDispatcher.fontRenderer;

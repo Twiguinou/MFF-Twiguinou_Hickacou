@@ -11,8 +11,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 
-import java.util.Random;
-
 public class TimerBombTileEntity extends TileEntity implements ITickableTileEntity {
 
     private int initialTicks = 500;
@@ -28,11 +26,11 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
         if(this.isBlockActivated()) {
             runningTicks--;
             if(runningTicks%40 == 0) {
-                this.world.playSound((PlayerEntity)null, this.getPos().getX(), this.getPos().getY(), this.pos.getZ(), SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, SoundCategory.BLOCKS, 0.5F, 0.4F/new Random().nextFloat()*0.4F+0.8F);
+                this.world.playSound((PlayerEntity)null, this.getPos(), SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 0.6F, 0.8F);
             }
             if(runningTicks <= 0) {
                 this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-                CustomExplosion customExplosion = new CustomExplosion(this.world, this.getPos(), 60, 0.4F);
+                CustomExplosion customExplosion = new CustomExplosion(this.world, this.getPos(), 11, 0.65F);
                 customExplosion.explode();
                 this.remove();
             }
@@ -79,7 +77,7 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
     }
 
     public String getStringFormatted() {
-        return String.valueOf(runningTicks*100/initialTicks) + "%";
+        return String.valueOf(runningTicks*100/getInitialTicks()) + "%";
     }
 
 }
