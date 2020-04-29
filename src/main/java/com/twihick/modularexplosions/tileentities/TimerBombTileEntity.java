@@ -1,17 +1,84 @@
 package com.twihick.modularexplosions.tileentities;
 
+import com.twihick.modularexplosions.blocks.TimerBombBlock;
 import com.twihick.modularexplosions.common.registry.TileEntitiesList;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.world.Explosion;
+
+import java.util.Random;
 
 public class TimerBombTileEntity extends TileEntity implements ITickableTileEntity {
 
+    private int initialTicks = 500;
+    private int runningTicks;
+
     public TimerBombTileEntity() {
         super(TileEntitiesList.TIMER_BOMB);
+        this.runningTicks = initialTicks;
     }
 
     @Override
     public void tick() {
+        if(this.isBlockActivated()) {
+            runningTicks--;
+            if(runningTicks%40 == 0) {
+                this.world.playSound((PlayerEntity)null, this.getPos().getX(), this.getPos().getY(), this.pos.getZ(), SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, SoundCategory.BLOCKS, 0.5F, 0.4F/new Random().nextFloat()*0.4F+0.8F);
+            }
+            if(runningTicks <= 0) {
+                this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
+                this.world.createExplosion(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 3.0F, Explosion.Mode.DESTROY);
+                this.remove();
+            }
+        }
+    }
+
+    public int getInitialTicks() {
+        return initialTicks;
+    }
+
+    public void setInitialTicks(int ticks) {
+        if(ticks < 20) {
+            this.initialTicks = 20;
+        }else {
+            this.initialTicks = ticks;
+        }
+        this.runningTicks = initialTicks;
+    }
+
+    public int getRunningTicks() {
+        return runningTicks;
+    }
+
+    public boolean isBlockActivated() {
+        return this.getBlockState().get(TimerBombBlock.ACTIVATED).booleanValue();
+    }
+
+    @Override
+    public CompoundNBT write(CompoundNBT compound) {
+        compound.putInt("Initial Ticks", this.initialTicks);
+        compound.putInt("Running Ticks", this.runningTicks);
+        return super.write(compound);
+    }
+
+    @Override
+    public void read(CompoundNBT compound) {
+        if(compound.contains("Initial Ticks")) {
+            this.initialTicks = compound.getInt("Initial Ticks");
+        }
+        if(compound.contains("Running Ticks")) {
+            this.runningTicks = compound.getInt("Running Ticks");
+        }
+        super.read(compound);
+    }
+
+    public String getStringFormatted() {
+        return String.valueOf(runningTicks*100/initialTicks) + "%";
     }
 
 }

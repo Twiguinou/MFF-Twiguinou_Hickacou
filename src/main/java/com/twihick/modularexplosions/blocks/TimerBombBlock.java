@@ -1,11 +1,13 @@
 package com.twihick.modularexplosions.blocks;
 
+import com.twihick.modularexplosions.client.gui.TimerBombScreen;
 import com.twihick.modularexplosions.properties.ExtendedBlockStateProperties;
 import com.twihick.modularexplosions.tileentities.TimerBombTileEntity;
 import com.twihick.modularexplosions.util.ShapeUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -16,7 +18,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -45,9 +46,7 @@ public class TimerBombBlock extends AbstractFacingAlignedBlock {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult rtr) {
-        if(!worldIn.isRemote) {
-            worldIn.createExplosion(player, pos.getX(), pos.getY(), pos.getZ(), 3.0F, Explosion.Mode.DESTROY);
-        }
+        Minecraft.getInstance().displayGuiScreen(new TimerBombScreen((TimerBombTileEntity)worldIn.getTileEntity(pos)));
         return ActionResultType.SUCCESS;
     }
 
