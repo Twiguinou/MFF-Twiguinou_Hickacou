@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "modularexplosions:block/timer_bomb",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "modularexplosions:block/timer_bomb",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "modularexplosions:block/timer_bomb",
+      "y": 0
+    },
+    "facing=west": {
+      "model": "modularexplosions:block/timer_bomb",
+      "y": 90
+    }
+  }
+}
