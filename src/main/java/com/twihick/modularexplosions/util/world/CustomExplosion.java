@@ -6,7 +6,13 @@ import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.particles.ItemParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -96,8 +102,17 @@ public class CustomExplosion {
                 }
             }
         }
+        world.playSound((PlayerEntity)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_DRAGON_FIREBALL_EXPLODE, SoundCategory.BLOCKS, 0.8F, -0.4F);
         playerKnockbackMap.forEach((player, motion) -> player.setMotion(player.getMotion().add(motion.scale(1.75F))));
-        set.forEach(blockPos -> world.setBlockState(blockPos, Blocks.AIR.getDefaultState()));
+        for(int i = 0; i < set.size(); i++) {
+            world.setBlockState(set.get(i), Blocks.AIR.getDefaultState());
+            if(set.get(i).getY() == pos.getY()) {
+                for(int j = 0; j < 5; j++) {
+                    world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.GRAY_WOOL)), set.get(i).getX(), set.get(i).getY(), set.get(i).getZ(), rand.nextDouble(), rand.nextFloat(), rand.nextDouble());
+                    world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.LIGHT_GRAY_WOOL)), set.get(i).getX(), set.get(i).getY(), set.get(i).getZ(), rand.nextDouble(), rand.nextFloat(), rand.nextDouble());
+                }
+            }
+        }
     }
 
 }
