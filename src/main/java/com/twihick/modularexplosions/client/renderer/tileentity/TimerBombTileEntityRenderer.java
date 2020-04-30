@@ -45,7 +45,8 @@ public class TimerBombTileEntityRenderer extends TileEntityRenderer<TimerBombTil
             }
             matrix.scale(0.01F, 0.01F, 0.01F);
             FontRenderer fontRenderer = this.renderDispatcher.fontRenderer;
-            fontRenderer.renderString(bomb.getStringFormatted(), (float)(-fontRenderer.getStringWidth(bomb.getStringFormatted())/2), 0, texture, false, matrix.getLast().getMatrix(), buffer, false, 0, light);
+            String text = ((bomb.runningTicks*100)/bomb.initialTicks) + "%";
+            fontRenderer.renderString(text, (float)(-fontRenderer.getStringWidth(text)/2), 0, texture, false, matrix.getLast().getMatrix(), buffer, false, 0, light);
             matrix.pop();
         }
     }

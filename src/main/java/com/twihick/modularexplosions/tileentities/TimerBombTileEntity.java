@@ -6,15 +6,19 @@ import com.twihick.modularexplosions.util.world.CustomExplosion;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 
+import javax.annotation.Nullable;
+
 public class TimerBombTileEntity extends TileEntity implements ITickableTileEntity {
 
-    private int initialTicks = 500;
-    private int runningTicks;
+    public int initialTicks = 500;
+    public int runningTicks;
 
     public TimerBombTileEntity() {
         super(TileEntitiesList.TIMER_BOMB);
@@ -67,17 +71,29 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
 
     @Override
     public void read(CompoundNBT compound) {
+        super.read(compound);
         if(compound.contains("Initial Ticks")) {
             this.initialTicks = compound.getInt("Initial Ticks");
         }
         if(compound.contains("Running Ticks")) {
             this.runningTicks = compound.getInt("Running Ticks");
         }
-        super.read(compound);
     }
 
-    public String getStringFormatted() {
-        return String.valueOf(runningTicks*100/getInitialTicks()) + "%";
+    @Override
+    public CompoundNBT getUpdateTag() {
+        return this.write(new CompoundNBT());
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(this.getPos(), 0, this.getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager network, SUpdateTileEntityPacket packet) {
+        this.read(packet.getNbtCompound());
     }
 
 }

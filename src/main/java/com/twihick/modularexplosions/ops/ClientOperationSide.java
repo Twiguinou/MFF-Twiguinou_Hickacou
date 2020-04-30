@@ -7,6 +7,7 @@ public final class ClientOperationSide extends ServerOperationSide {
 
     @Override
     public void client(FMLClientSetupEvent event) {
+        MasterRenderer.entities();
         MasterRenderer.tileEntities();
     }
 

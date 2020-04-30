@@ -34,13 +34,13 @@ public class TimerBombScreen extends Screen {
     protected void init() {
         int leftCorner = (this.width-this.xSize) / 2;
         int topCorner = (this.height-this.ySize) / 2;
-        this.buttonMore = this.addButton(new Button(leftCorner+5, topCorner+35, 30, 15, I18n.format("gui.button.modularexplosions.more"), button -> {
+        this.buttonMore = this.addButton(new Button(leftCorner+5, topCorner+30, 40, 20, I18n.format("gui.button.modularexplosions.more"), button -> {
             bomb.setInitialTicks(bomb.getInitialTicks()+5);
         }));
-        this.buttonLess = this.addButton(new Button(leftCorner+115, topCorner+35, 30, 15, I18n.format("gui.button.modularexplosions.less"), button -> {
+        this.buttonLess = this.addButton(new Button(leftCorner+105, topCorner+30, 40, 20, I18n.format("gui.button.modularexplosions.less"), button -> {
             bomb.setInitialTicks(bomb.getInitialTicks()-5);
         }));
-        this.buttonActivate = this.addButton(new Button(leftCorner+60, topCorner+65, 79, 20, I18n.format("gui.button.modularexplosions.activate"), button -> {
+        this.buttonActivate = this.addButton(new Button(leftCorner+35, topCorner+65, 80, 20, I18n.format("gui.button.modularexplosions.activate"), button -> {
             bomb.getWorld().setBlockState(bomb.getPos(), bomb.getBlockState().with(TimerBombBlock.ACTIVATED, Boolean.valueOf(true)));
             this.minecraft.player.closeScreen();
         }));
@@ -66,7 +66,7 @@ public class TimerBombScreen extends Screen {
         int topCorner = (this.height-this.ySize) / 2;
         this.blit(leftCorner, topCorner, 0, 0, this.xSize, this.ySize);
         super.render(mouseX, mouseY, partialTicks);
-        this.font.drawString(new StringTextComponent(String.valueOf(this.bomb.getInitialTicks())).getFormattedText(), leftCorner+this.xSize/2, topCorner+25, Color.WHITE.getRGB());
+        this.font.drawString(new StringTextComponent(String.valueOf(this.bomb.getRunningTicks())).getFormattedText(), (leftCorner+this.xSize/2)-7, topCorner+25, Color.WHITE.getRGB());
     }
 
 }

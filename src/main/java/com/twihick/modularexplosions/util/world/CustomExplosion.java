@@ -1,5 +1,6 @@
 package com.twihick.modularexplosions.util.world;
 
+import com.twihick.modularexplosions.common.events.ExtendedEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.ProtectionEnchantment;
@@ -26,10 +27,11 @@ import java.util.*;
 public class CustomExplosion {
 
     private final Map<PlayerEntity, Vec3d> playerKnockbackMap = new HashMap<>();
+    private final List<BlockPos> set = new ArrayList<>();
 
     private final World world;
     private final BlockPos pos;
-    private final int radius;
+    public final int radius;
     private final float distFactor;
 
     public CustomExplosion(World world, BlockPos pos, int radius, float distFactor) {
@@ -44,7 +46,6 @@ public class CustomExplosion {
     }
 
     public void explodeExcluding(@Nullable Entity entityIn) {
-        List<BlockPos> set = new ArrayList<>();
         Random rand = new Random();
         int a = this.radius;
         int b = (int) (this.radius*this.distFactor);
@@ -70,6 +71,10 @@ public class CustomExplosion {
         AxisAlignedBB aabb = new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ);
         List<Entity> entities;
         entities = entityIn == null ? world.getEntitiesWithinAABB(Entity.class, aabb) : world.getEntitiesWithinAABBExcludingEntity(entityIn, aabb);
+        /*
+        Here the explosion event is called.
+         */
+        ExtendedEvents.onCustomExplosionDetonate(world, this, pos, entities);
         Vec3d vecPos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
         float f = radius * 4.0F;
         for(Entity entity : entities) {
@@ -106,11 +111,10 @@ public class CustomExplosion {
         playerKnockbackMap.forEach((player, motion) -> player.setMotion(player.getMotion().add(motion.scale(1.75F))));
         for(int i = 0; i < set.size(); i++) {
             world.setBlockState(set.get(i), Blocks.AIR.getDefaultState());
-            if(set.get(i).getY() == pos.getY()) {
-                for(int j = 0; j < 5; j++) {
-                    world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.GRAY_WOOL)), set.get(i).getX(), set.get(i).getY(), set.get(i).getZ(), rand.nextDouble(), rand.nextFloat(), rand.nextDouble());
-                    world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.LIGHT_GRAY_WOOL)), set.get(i).getX(), set.get(i).getY(), set.get(i).getZ(), rand.nextDouble(), rand.nextFloat(), rand.nextDouble());
-                }
+            Vec3d motionParticle = new Vec3d(set.get(i).getX()-pos.getX(), set.get(i).getY()-pos.getY(), set.get(i).getZ()-pos.getZ()).scale(0.25D);
+            for(int j = 0; j < 5; j++) {
+                world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.GRAY_WOOL)), set.get(i).getX(), set.get(i).getY(), set.get(i).getZ(), motionParticle.x*rand.nextDouble(), motionParticle.y*rand.nextDouble(), motionParticle.z*rand.nextDouble());
+                world.addParticle(new ItemParticleData(ParticleTypes.ITEM, new ItemStack(Items.LIGHT_GRAY_WOOL)), set.get(i).getX(), set.get(i).getY(), set.get(i).getZ(), motionParticle.x*rand.nextFloat(), motionParticle.y*rand.nextFloat(), motionParticle.z*rand.nextFloat());
             }
         }
     }

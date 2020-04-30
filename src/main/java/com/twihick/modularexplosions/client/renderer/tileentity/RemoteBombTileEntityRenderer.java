@@ -5,7 +5,10 @@ import com.twihick.modularexplosions.tileentities.RemoteBombTileEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class RemoteBombTileEntityRenderer extends TileEntityRenderer<RemoteBombTileEntity> {
 
     public RemoteBombTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
