@@ -15,7 +15,7 @@ import net.minecraft.world.IBlockReader;
 
 public class RemoteBombBlock extends HorizontalFaceBlock {
 
-    public static final VoxelShape FLOOR_SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 6.0D, 11.25D, 2.0D, 10.0D);
+    public static final VoxelShape FLOOR_SHAPE = Block.makeCuboidShape(4.25D, 0.0D, 6.0D, 12.5D, 2.0D, 10.0D);
     public static final VoxelShape CEILING_SHAPE = Block.makeCuboidShape(3.5D, 14.0D, 5.95D, 11.75D, 16.0D, 10.0D);
     public static final VoxelShape WALL_SHAPE = Block.makeCuboidShape(3.5D, 6.0D, 14.0D, 11.75D, 10.0D, 16.0D);
 

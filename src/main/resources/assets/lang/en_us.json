@@ -1,4 +1,7 @@
 {
+  "itemGroup.modularexplosions": "Modular Explosions",
+  "block.modularexplosions.timer_bomb": "Timer Bomb",
+  "block.modularexplosions.remote_bomb": "Remote Bomb",
   "gui.button.modularexplosions.more": "+",
   "gui.button.modularexplosions.less": "-",
   "gui.button.modularexplosions.activate": "Done"
