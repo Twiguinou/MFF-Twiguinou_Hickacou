@@ -16,8 +16,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class TimerBombTileEntityRenderer extends TileEntityRenderer<TimerBombTileEntity> {
 
-    public TimerBombTileEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+    public TimerBombTileEntityRenderer(TileEntityRendererDispatcher renderer) {
+        super(renderer);
     }
 
     @Override
