@@ -1,6 +1,7 @@
 package com.twihick.modularexplosions.common.registry;
 
 import com.twihick.modularexplosions.StringID;
+import com.twihick.modularexplosions.blocks.RemoteBombBlock;
 import com.twihick.modularexplosions.blocks.TimerBombBlock;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
@@ -11,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 public class BlocksList {
 
     public static final Block TIMER_BOMB = RegistryMethods.buildBlock(TimerBombBlock.class, IDS.TIMER_BOMB.getValue(), null);
-    public static final Block REMOTE_BOMB =
+    public static final Block REMOTE_BOMB = RegistryMethods.buildBlock(RemoteBombBlock.class, IDS.REMOTE_BOMB.getValue(), null);
 
     @SubscribeEvent
     public static void registerBlocks(final RegistryEvent.Register<Block> event) {

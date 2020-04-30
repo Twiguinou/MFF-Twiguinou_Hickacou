@@ -42,6 +42,7 @@ public class TimerBombScreen extends Screen {
         }));
         this.buttonActivate = this.addButton(new Button(leftCorner+60, topCorner+65, 79, 20, I18n.format("gui.button.modularexplosions.activate"), button -> {
             bomb.getWorld().setBlockState(bomb.getPos(), bomb.getBlockState().with(TimerBombBlock.ACTIVATED, Boolean.valueOf(true)));
+            this.minecraft.player.closeScreen();
         }));
         this.buttonMore.active = false;
         this.buttonLess.active = false;
