@@ -1,7 +1,6 @@
 package com.twihick.modularexplosions.blocks;
 
 import com.twihick.modularexplosions.client.gui.ConfigurableBombScreen;
-import com.twihick.modularexplosions.properties.ExtendedBlockStateProperties;
 import com.twihick.modularexplosions.tileentities.ConfigurableBombTileEntity;
 import com.twihick.modularexplosions.util.world.CustomExplosion;
 import net.minecraft.block.Block;
@@ -11,19 +10,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
@@ -31,14 +25,11 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class ConfigurableBombBlock extends AbstractFacingAlignedBlock {
-
-    public static final BooleanProperty ACTIVATED = ExtendedBlockStateProperties.ACTIVATED;
+public class ConfigurableBombBlock extends Block {
 
     public ConfigurableBombBlock() {
         super(Block.Properties
                 .create(Material.IRON));
-        this.setDefaultState(this.getDefaultState().with(ACTIVATED, Boolean.valueOf(false)));
     }
 
     @Override
@@ -87,13 +78,6 @@ public class ConfigurableBombBlock extends AbstractFacingAlignedBlock {
         }
     }
 
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        if(!worldIn.isRemote() && !player.isCreative() && state.get(ACTIVATED)) {
-            catchFire(state, worldIn, pos, null, null);
-        }
-        super.onBlockHarvested(worldIn, pos, state, player);
-    }
-
     private static void explode(World worldIn, BlockPos pos) {
         if(!worldIn.isRemote) {
             ConfigurableBombTileEntity bomb = (ConfigurableBombTileEntity) worldIn.getTileEntity(pos);
@@ -125,9 +109,4 @@ public class ConfigurableBombBlock extends AbstractFacingAlignedBlock {
         }
     }
 
-    @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
-        builder.add(ACTIVATED);
-    }
 }
