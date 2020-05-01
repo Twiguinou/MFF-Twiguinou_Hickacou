@@ -7,35 +7,40 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
+public class ConfigurableBombTileEntity extends TileEntity {
 
-public class RemoteBombTileEntity extends TileEntity {
+    public int radius_one = 10;
+    public int radius_two = 10;
 
-    public UUID playerLink;
-
-    public RemoteBombTileEntity() {
-        super(TileEntitiesList.REMOTE_BOMB);
-    }
-
-    public void setPlayerLink(UUID newUUID) {
-        this.playerLink = newUUID;
+    public ConfigurableBombTileEntity() {
+        super(TileEntitiesList.CONFIGURABLE_BOMB);
     }
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        if(this.playerLink != null) {
-            compound.putUniqueId("Player UUID", this.playerLink);
-        }
+        compound.putInt("Radius One", this.radius_one);
+        compound.putInt("Radius Two", this.radius_two);
         return super.write(compound);
+    }
+
+    public void setRadiusOne(int radius) {
+        this.radius_one = radius;
+    }
+
+    public void setRadiusTwo(int radius) {
+        this.radius_two = radius;
     }
 
     @Override
     public void read(CompoundNBT compound) {
-        if(compound.hasUniqueId("Player UUID")) {
-            this.playerLink = compound.getUniqueId("Player UUID");
-        }
         super.read(compound);
+        if(compound.contains("Radius One")) {
+            this.radius_one = compound.getInt("Radius One");
+        }
+        if(compound.contains("Radius Two")) {
+            this.radius_two = compound.getInt("Radius Two");
+        }
     }
 
     @Override

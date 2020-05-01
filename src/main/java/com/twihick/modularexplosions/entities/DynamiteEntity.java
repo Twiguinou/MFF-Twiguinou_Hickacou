@@ -48,6 +48,9 @@ public class DynamiteEntity extends Entity {
             this.setRotation(this.getYaw(1.0F), this.getPitch(1.0F)+7.5F);
             this.setMotion(adjustedMotion);
         }
+        if(this.collidedHorizontally) {
+            this.setMotion(new Vec3d(-this.getMotion().x, this.getMotion().y, -this.getMotion().z).scale(0.5D));
+        }
         this.runningTicks++;
         if(this.runningTicks >= maxLifetime) {
             this.remove();

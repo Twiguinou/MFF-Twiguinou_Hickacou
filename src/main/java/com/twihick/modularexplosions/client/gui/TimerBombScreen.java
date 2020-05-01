@@ -17,10 +17,10 @@ public class TimerBombScreen extends Screen {
 
     private static final ResourceLocation GUI_BACKGROUND = new ResourceLocation(StringID.ID, "textures/gui/timer_bomb_screen.png");
 
-    private int xSize = 151;
-    private int ySize = 101;
+    private final int xSize = 151;
+    private final int ySize = 101;
 
-    private TimerBombTileEntity bomb;
+    private final TimerBombTileEntity bomb;
     private Button buttonMore;
     private Button buttonLess;
     private Button buttonActivate;
