@@ -12,50 +12,46 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import org.apache.logging.log4j.LogManager;
 
 import javax.annotation.Nullable;
+import java.util.logging.Logger;
 
 public class TimerBombTileEntity extends TileEntity implements ITickableTileEntity {
-
-    public int initialTicks = 500;
-    public int runningTicks;
+    public int runningTicks = 500;
+    public int minutes;
+    public int seconds;
 
     public TimerBombTileEntity() {
         super(TileEntitiesList.TIMER_BOMB);
-        this.runningTicks = initialTicks;
     }
 
     @Override
     public void tick() {
         if(this.isBlockActivated()) {
             runningTicks--;
-            if(runningTicks%40 == 0) {
+            if(runningTicks%20 == 0) {
                 this.world.playSound((PlayerEntity)null, this.getPos(), SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 0.6F, 0.8F);
             }
             if(runningTicks <= 0) {
+                this.remove();
                 this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
+                this.world.playSound((PlayerEntity)null, this.getPos(), SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.BLOCKS, 0.6F, 0.8F);
                 CustomExplosion customExplosion = new CustomExplosion(this.world, this.getPos(), 4, 0.65F);
                 customExplosion.explode();
-                this.remove();
             }
         }
     }
 
-    public int getInitialTicks() {
-        return initialTicks;
-    }
 
-    public void setInitialTicks(int ticks) {
-        if(ticks < 20) {
-            this.initialTicks = 20;
-        }else {
-            this.initialTicks = ticks;
-        }
-        this.runningTicks = initialTicks;
+    public String getFormattedSeconds() {
+        return (this.seconds > 9) ? String.format("%s",this.seconds) : String.format("0%s",this.seconds);
     }
-
-    public int getRunningTicks() {
-        return runningTicks;
+    public String getFormattedMinutes() {
+        return (this.minutes > 9) ? String.format("%s",this.minutes) : String.format("0%s",this.minutes);
+    }
+    public String getDisplayCountdown() {
+        return String.format("%s:%s", this.getFormattedMinutes(), this.getFormattedSeconds());
     }
 
     public boolean isBlockActivated() {
@@ -64,19 +60,23 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        compound.putInt("Initial Ticks", this.initialTicks);
         compound.putInt("Running Ticks", this.runningTicks);
+        compound.putInt("Minutes", this.minutes);
+        compound.putInt("Seconds", this.seconds);
         return super.write(compound);
     }
 
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        if(compound.contains("Initial Ticks")) {
-            this.initialTicks = compound.getInt("Initial Ticks");
-        }
         if(compound.contains("Running Ticks")) {
             this.runningTicks = compound.getInt("Running Ticks");
+        }
+        if(compound.contains("Minutes")) {
+            this.runningTicks = compound.getInt("Minutes");
+        }
+        if(compound.contains("Seconds")) {
+            this.runningTicks = compound.getInt("Seconds");
         }
     }
 

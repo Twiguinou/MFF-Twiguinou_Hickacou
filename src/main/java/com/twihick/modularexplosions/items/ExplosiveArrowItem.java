@@ -1,6 +1,7 @@
 package com.twihick.modularexplosions.items;
 
 import com.twihick.modularexplosions.Main;
+import com.twihick.modularexplosions.entities.ExplosiveArrowEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.SpectralArrowEntity;
@@ -18,7 +19,7 @@ public class ExplosiveArrowItem extends ArrowItem {
 
     @Override
     public AbstractArrowEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-        return new SpectralArrowEntity(worldIn, shooter);
+        return new ExplosiveArrowEntity(worldIn, shooter);
     }
 
 }

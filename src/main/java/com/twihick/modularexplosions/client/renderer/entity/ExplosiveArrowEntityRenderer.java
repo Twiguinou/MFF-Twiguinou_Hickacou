@@ -9,6 +9,7 @@ public class ExplosiveArrowEntityRenderer extends EntityRenderer<ExplosiveArrowE
 
     public ExplosiveArrowEntityRenderer(EntityRendererManager renderManager) {
         super(renderManager);
+        renderManager.setDebugBoundingBox(true);
     }
 
     @Override
