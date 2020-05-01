@@ -35,10 +35,10 @@ public class TimerBombScreen extends Screen {
         int leftCorner = (this.width-this.xSize) / 2;
         int topCorner = (this.height-this.ySize) / 2;
         this.buttonMore = this.addButton(new Button(leftCorner+5, topCorner+30, 40, 20, I18n.format("gui.button.modularexplosions.more"), button -> {
-            bomb.setInitialTicks(bomb.getInitialTicks()+5);
+            bomb.setInitialTicks(bomb.getInitialTicks()+10);
         }));
         this.buttonLess = this.addButton(new Button(leftCorner+105, topCorner+30, 40, 20, I18n.format("gui.button.modularexplosions.less"), button -> {
-            bomb.setInitialTicks(bomb.getInitialTicks()-5);
+            bomb.setInitialTicks(bomb.getInitialTicks()-10);
         }));
         this.buttonActivate = this.addButton(new Button(leftCorner+35, topCorner+65, 80, 20, I18n.format("gui.button.modularexplosions.activate"), button -> {
             bomb.getWorld().setBlockState(bomb.getPos(), bomb.getBlockState().with(TimerBombBlock.ACTIVATED, Boolean.valueOf(true)));
