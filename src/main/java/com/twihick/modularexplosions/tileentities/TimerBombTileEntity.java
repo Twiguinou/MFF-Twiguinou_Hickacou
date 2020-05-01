@@ -19,8 +19,6 @@ import java.util.logging.Logger;
 
 public class TimerBombTileEntity extends TileEntity implements ITickableTileEntity {
     public int runningTicks = 500;
-    public int minutes;
-    public int seconds;
 
     public TimerBombTileEntity() {
         super(TileEntitiesList.TIMER_BOMB);
@@ -34,22 +32,31 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
                 this.world.playSound((PlayerEntity)null, this.getPos(), SoundEvents.BLOCK_WOODEN_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 0.6F, 0.8F);
             }
             if(runningTicks <= 0) {
-                this.remove();
                 this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-                this.world.playSound((PlayerEntity)null, this.getPos(), SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.BLOCKS, 0.6F, 0.8F);
                 CustomExplosion customExplosion = new CustomExplosion(this.world, this.getPos(), 4, 0.65F);
                 customExplosion.explode();
+                this.remove();
             }
         }
     }
 
+    public int[] computeTime() {
+        int secs = this.runningTicks/20;
+        int mins = (int)Math.floor(secs/60);
+        secs-=mins*60;
+        return new int[]{mins, secs};
+    }
+
+    public String getFormattedMinutes() {
+        int mins = computeTime()[0];
+        return (mins > 9) ? String.format("%s", mins) : String.format("0%s", mins);
+    }
 
     public String getFormattedSeconds() {
-        return (this.seconds > 9) ? String.format("%s",this.seconds) : String.format("0%s",this.seconds);
+        int secs = computeTime()[1];
+        return (secs > 9) ? String.format("%s", secs) : String.format("0%s", secs);
     }
-    public String getFormattedMinutes() {
-        return (this.minutes > 9) ? String.format("%s",this.minutes) : String.format("0%s",this.minutes);
-    }
+
     public String getDisplayCountdown() {
         return String.format("%s:%s", this.getFormattedMinutes(), this.getFormattedSeconds());
     }
@@ -61,8 +68,6 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.putInt("Running Ticks", this.runningTicks);
-        compound.putInt("Minutes", this.minutes);
-        compound.putInt("Seconds", this.seconds);
         return super.write(compound);
     }
 
@@ -71,12 +76,6 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
         super.read(compound);
         if(compound.contains("Running Ticks")) {
             this.runningTicks = compound.getInt("Running Ticks");
-        }
-        if(compound.contains("Minutes")) {
-            this.runningTicks = compound.getInt("Minutes");
-        }
-        if(compound.contains("Seconds")) {
-            this.runningTicks = compound.getInt("Seconds");
         }
     }
 

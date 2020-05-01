@@ -37,29 +37,22 @@ public class TimerBombScreen extends Screen {
         int leftCorner = (this.width-this.xSize) / 2;
         int topCorner = (this.height-this.ySize) / 2;
         this.buttonMoreMins = this.addButton(new Button((leftCorner+this.xSize/2)-30, topCorner+10,20,20, I18n.format("gui.button.modularexplosions.more"), button -> {
-            bomb.minutes++;
-            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
+            bomb.runningTicks+=1200;
         }));
         this.buttonLessMins = this.addButton(new Button((leftCorner+this.xSize/2)-30, topCorner+50,20,20, I18n.format("gui.button.modularexplosions.less"), button -> {
-            if (bomb.minutes > 0) bomb.minutes--;
-            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
+            if (bomb.computeTime()[0]-1 >= 0) {
+                bomb.runningTicks-=1200;
+            }
         }));
         this.buttonMoreSecs = this.addButton(new Button((leftCorner+this.xSize/2)+10, topCorner+10,20,20, I18n.format("gui.button.modularexplosions.more"), button -> {
-            if (++bomb.seconds > 59) {
-                bomb.seconds = 0;
-                bomb.minutes++;
-            }
-            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
+                bomb.runningTicks+=20;
         }));
         this.buttonLessSecs = this.addButton(new Button((leftCorner+this.xSize/2)+10, topCorner+50,20,20, I18n.format("gui.button.modularexplosions.less"), button -> {
-            if (--bomb.seconds < 0) {
-                bomb.seconds = 59;
-                if (bomb.minutes > 0) bomb.minutes--;
+            if (bomb.runningTicks-20 >= 0) {
+                bomb.runningTicks-=20;
             }
-            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
         }));
         this.buttonActivate = this.addButton(new Button((leftCorner+this.xSize/2)-40, topCorner+75, 80, 20, I18n.format("gui.button.modularexplosions.activate"), button -> {
-            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
             bomb.getWorld().setBlockState(bomb.getPos(), bomb.getBlockState().with(TimerBombBlock.ACTIVATED, Boolean.valueOf(true)));
             this.minecraft.player.closeScreen();
         }));
