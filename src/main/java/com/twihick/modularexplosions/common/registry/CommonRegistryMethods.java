@@ -41,6 +41,17 @@ public class CommonRegistryMethods {
         return item;
     }
 
+    public static <T extends Item> Item replaceItem(Class<T> clazz, String label) {
+        Item item = null;
+        try {
+            item = clazz.newInstance().setRegistryName("minecraft:"+label);
+            ITEMS.add(item);
+        }catch(InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
     /*
     With auto-generated Block-Item.
      */
