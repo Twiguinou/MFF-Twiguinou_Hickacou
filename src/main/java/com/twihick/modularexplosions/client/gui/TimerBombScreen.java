@@ -21,8 +21,10 @@ public class TimerBombScreen extends Screen {
     private final int ySize = 101;
 
     private final TimerBombTileEntity bomb;
-    private Button buttonMore;
-    private Button buttonLess;
+    private Button buttonMoreMins;
+    private Button buttonLessMins;
+    private Button buttonMoreSecs;
+    private Button buttonLessSecs;
     private Button buttonActivate;
 
     public TimerBombScreen(TimerBombTileEntity bomb) {
@@ -34,27 +36,38 @@ public class TimerBombScreen extends Screen {
     protected void init() {
         int leftCorner = (this.width-this.xSize) / 2;
         int topCorner = (this.height-this.ySize) / 2;
-        this.buttonMore = this.addButton(new Button(leftCorner+5, topCorner+30, 40, 20, I18n.format("gui.button.modularexplosions.more"), button -> {
-            bomb.setInitialTicks(bomb.getInitialTicks()+10);
+        this.buttonMoreMins = this.addButton(new Button((leftCorner+this.xSize/2)-30, topCorner+10,20,20, I18n.format("gui.button.modularexplosions.more"), button -> {
+            bomb.minutes++;
+            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
         }));
-        this.buttonLess = this.addButton(new Button(leftCorner+105, topCorner+30, 40, 20, I18n.format("gui.button.modularexplosions.less"), button -> {
-            bomb.setInitialTicks(bomb.getInitialTicks()-10);
+        this.buttonLessMins = this.addButton(new Button((leftCorner+this.xSize/2)-30, topCorner+50,20,20, I18n.format("gui.button.modularexplosions.less"), button -> {
+            if (bomb.minutes > 0) bomb.minutes--;
+            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
         }));
-        this.buttonActivate = this.addButton(new Button(leftCorner+35, topCorner+65, 80, 20, I18n.format("gui.button.modularexplosions.activate"), button -> {
+        this.buttonMoreSecs = this.addButton(new Button((leftCorner+this.xSize/2)+10, topCorner+10,20,20, I18n.format("gui.button.modularexplosions.more"), button -> {
+            if (++bomb.seconds > 59) {
+                bomb.seconds = 0;
+                bomb.minutes++;
+            }
+            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
+        }));
+        this.buttonLessSecs = this.addButton(new Button((leftCorner+this.xSize/2)+10, topCorner+50,20,20, I18n.format("gui.button.modularexplosions.less"), button -> {
+            if (--bomb.seconds < 0) {
+                bomb.seconds = 59;
+                if (bomb.minutes > 0) bomb.minutes--;
+            }
+            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
+        }));
+        this.buttonActivate = this.addButton(new Button((leftCorner+this.xSize/2)-40, topCorner+75, 80, 20, I18n.format("gui.button.modularexplosions.activate"), button -> {
+            bomb.runningTicks = bomb.minutes*60*20 + bomb.seconds*20;
             bomb.getWorld().setBlockState(bomb.getPos(), bomb.getBlockState().with(TimerBombBlock.ACTIVATED, Boolean.valueOf(true)));
             this.minecraft.player.closeScreen();
         }));
-        this.buttonMore.active = false;
-        this.buttonLess.active = false;
-        this.buttonActivate.active = false;
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.buttonMore.active = !bomb.isBlockActivated();
-        this.buttonLess.active = !bomb.isBlockActivated() && bomb.getInitialTicks() > 20;
-        this.buttonActivate.active = !bomb.isBlockActivated();
     }
 
     @Override
@@ -66,7 +79,11 @@ public class TimerBombScreen extends Screen {
         int topCorner = (this.height-this.ySize) / 2;
         this.blit(leftCorner, topCorner, 0, 0, this.xSize, this.ySize);
         super.render(mouseX, mouseY, partialTicks);
-        this.font.drawString(new StringTextComponent(String.valueOf(this.bomb.getRunningTicks())).getFormattedText(), (leftCorner+this.xSize/2)-7, topCorner+25, Color.WHITE.getRGB());
+        float minsW = this.font.getStringWidth(new StringTextComponent(bomb.getFormattedMinutes()).getFormattedText());
+        float secsW = this.font.getStringWidth(new StringTextComponent(bomb.getFormattedSeconds()).getFormattedText());
+        this.font.drawString(new StringTextComponent(bomb.getFormattedMinutes()).getFormattedText(),(leftCorner+this.xSize/2)-30+minsW/2, topCorner+35, Color.WHITE.getRGB());
+        this.font.drawString(new StringTextComponent(bomb.getFormattedSeconds()).getFormattedText(),(leftCorner+this.xSize/2)+10+secsW/2, topCorner+35, Color.WHITE.getRGB());
+
     }
 
 }

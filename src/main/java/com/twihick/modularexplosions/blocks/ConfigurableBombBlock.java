@@ -96,7 +96,6 @@ public class ConfigurableBombBlock extends Block {
     public TileEntity createTileEntity(BlockState state, IBlockReader worldIn) {
         return new ConfigurableBombTileEntity();
     }
-
     @Override
     public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult rtr, Entity projectile) {
         if(!worldIn.isRemote && projectile instanceof AbstractArrowEntity) {
