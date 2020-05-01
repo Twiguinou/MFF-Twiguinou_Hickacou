@@ -11,12 +11,12 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = StringID.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TileEntitiesList {
 
-    public static final TileEntityType<TimerBombTileEntity> TIMER_BOMB = RegistryMethods.buildTileEntity(TimerBombTileEntity.class, IDS.TIMER_BOMB.getValue(), BlocksList.TIMER_BOMB);
-    public static final TileEntityType<RemoteBombTileEntity> REMOTE_BOMB = RegistryMethods.buildTileEntity(RemoteBombTileEntity.class, IDS.REMOTE_BOMB.getValue(), BlocksList.REMOTE_BOMB);
+    public static final TileEntityType<TimerBombTileEntity> TIMER_BOMB = CommonRegistryMethods.buildTileEntity(TimerBombTileEntity.class, IDS.TIMER_BOMB.getValue(), BlocksList.TIMER_BOMB);
+    public static final TileEntityType<RemoteBombTileEntity> REMOTE_BOMB = CommonRegistryMethods.buildTileEntity(RemoteBombTileEntity.class, IDS.REMOTE_BOMB.getValue(), BlocksList.REMOTE_BOMB);
 
     @SubscribeEvent
     public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
-        RegistryMethods.registerTileEntities(event);
+        CommonRegistryMethods.registerTileEntities(event);
     }
 
     private enum IDS {

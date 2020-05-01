@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegistryMethods {
+public class CommonRegistryMethods {
 
     private static final Logger regLog = LogManager.getLogger();
 
