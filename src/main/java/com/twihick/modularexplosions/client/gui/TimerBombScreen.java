@@ -75,6 +75,7 @@ public class TimerBombScreen extends Screen {
         float minsW = this.font.getStringWidth(new StringTextComponent(bomb.getFormattedMinutes()).getFormattedText());
         float secsW = this.font.getStringWidth(new StringTextComponent(bomb.getFormattedSeconds()).getFormattedText());
         this.font.drawString(new StringTextComponent(bomb.getFormattedMinutes()).getFormattedText(),(leftCorner+this.xSize/2)-30+minsW/2, topCorner+35, Color.WHITE.getRGB());
+        this.font.drawString(new StringTextComponent(":").getFormattedText(),(leftCorner+this.xSize/2), topCorner+35, Color.WHITE.getRGB());
         this.font.drawString(new StringTextComponent(bomb.getFormattedSeconds()).getFormattedText(),(leftCorner+this.xSize/2)+10+secsW/2, topCorner+35, Color.WHITE.getRGB());
 
     }
