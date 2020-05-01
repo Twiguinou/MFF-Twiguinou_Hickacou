@@ -126,14 +126,8 @@ public class ConfigurableBombBlock extends AbstractFacingAlignedBlock {
     }
 
     @Override
->>>>>>> fa837dbefae22d861115ce3ddcc11eedcda75882
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(ACTIVATED);
     }
-<<<<<<< HEAD
 }
-=======
-
-}
->>>>>>> fa837dbefae22d861115ce3ddcc11eedcda75882
