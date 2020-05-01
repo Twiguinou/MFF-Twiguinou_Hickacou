@@ -46,7 +46,9 @@ public class TimerBombBlock extends AbstractFacingAlignedBlock {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult rtr) {
-        Minecraft.getInstance().displayGuiScreen(new TimerBombScreen((TimerBombTileEntity)worldIn.getTileEntity(pos)));
+        if (!state.get(this.ACTIVATED).booleanValue()) {
+            Minecraft.getInstance().displayGuiScreen(new TimerBombScreen((TimerBombTileEntity) worldIn.getTileEntity(pos)));
+        }
         return ActionResultType.SUCCESS;
     }
 
