@@ -4,15 +4,16 @@ import com.twihick.modularexplosions.common.registry.TileEntitiesList;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
 
-public class RemoteBombTileEntity extends TileEntity {
+public class RemoteBombTileEntity extends TileEntity  {
 
-    public UUID playerLink;
+    public UUID playerLink = null;
 
     public RemoteBombTileEntity() {
         super(TileEntitiesList.REMOTE_BOMB);
@@ -32,10 +33,10 @@ public class RemoteBombTileEntity extends TileEntity {
 
     @Override
     public void read(CompoundNBT compound) {
+        super.read(compound);
         if(compound.hasUniqueId("Player UUID")) {
             this.playerLink = compound.getUniqueId("Player UUID");
         }
-        super.read(compound);
     }
 
     @Override

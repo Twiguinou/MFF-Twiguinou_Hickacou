@@ -1,6 +1,7 @@
 package com.twihick.modularexplosions.tileentities;
 
 import com.twihick.modularexplosions.blocks.TimerBombBlock;
+import com.twihick.modularexplosions.common.registry.SoundsList;
 import com.twihick.modularexplosions.common.registry.TileEntitiesList;
 import com.twihick.modularexplosions.util.world.CustomExplosion;
 import net.minecraft.block.Blocks;
@@ -12,12 +13,11 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import org.apache.logging.log4j.LogManager;
 
 import javax.annotation.Nullable;
-import java.util.logging.Logger;
 
 public class TimerBombTileEntity extends TileEntity implements ITickableTileEntity {
+
     public int runningTicks = 500;
 
     public TimerBombTileEntity() {
@@ -33,17 +33,17 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
             }
             if(runningTicks <= 0) {
                 this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-                CustomExplosion customExplosion = new CustomExplosion(this.world, this.getPos(), 4, 0.65F);
-                customExplosion.explode();
+                CustomExplosion customExplosion = new CustomExplosion(this.world, this.getPos(), 5, 0.8492F);
+                customExplosion.explodeExcluding(null, SoundsList.BOMB_GENERIC);
                 this.remove();
             }
         }
     }
 
     public int[] computeTime() {
-        int secs = this.runningTicks/20;
+        int secs = this.runningTicks / 20;
         int mins = (int)Math.floor(secs/60);
-        secs-=mins*60;
+        secs -= mins * 60;
         return new int[]{mins, secs};
     }
 

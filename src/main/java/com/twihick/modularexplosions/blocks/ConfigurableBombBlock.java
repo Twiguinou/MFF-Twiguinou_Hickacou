@@ -1,6 +1,7 @@
 package com.twihick.modularexplosions.blocks;
 
 import com.twihick.modularexplosions.client.gui.ConfigurableBombScreen;
+import com.twihick.modularexplosions.common.registry.SoundsList;
 import com.twihick.modularexplosions.tileentities.ConfigurableBombTileEntity;
 import com.twihick.modularexplosions.util.world.CustomExplosion;
 import net.minecraft.block.Block;
@@ -29,7 +30,8 @@ public class ConfigurableBombBlock extends Block {
 
     public ConfigurableBombBlock() {
         super(Block.Properties
-                .create(Material.IRON));
+                .create(Material.IRON)
+                .hardnessAndResistance(2.5F));
     }
 
     @Override
@@ -82,7 +84,7 @@ public class ConfigurableBombBlock extends Block {
         if(!worldIn.isRemote) {
             ConfigurableBombTileEntity bomb = (ConfigurableBombTileEntity) worldIn.getTileEntity(pos);
             CustomExplosion explosion = new CustomExplosion(worldIn, pos, bomb.radius_one/2, 0);
-            explosion.explodeExcluding(null, bomb.radius_two/2);
+            explosion.explodeExcluding(null, bomb.radius_two/2, SoundsList.BOMB_GENERIC);
         }
     }
 

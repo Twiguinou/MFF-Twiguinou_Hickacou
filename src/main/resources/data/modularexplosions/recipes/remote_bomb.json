@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "remote_bomb",
+  "pattern": [
+    "WWW",
+    "ROR"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:green_wool"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "O": {
+      "item": "minecraft:observer"
+    }
+  },
+  "result": {
+    "item": "modularexplosions:remote_bomb"
+  }
+}

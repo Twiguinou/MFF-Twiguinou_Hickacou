@@ -11,6 +11,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +31,7 @@ public class CommonRegistryMethods {
     private static final List<Block> BLOCKS = new ArrayList<>();
     private static final List<EntityType<?>> ENTITIES = new ArrayList<>();
     private static final List<TileEntityType<?>> TILE_ENTITIES = new ArrayList<>();
+    private static final List<SoundEvent> SOUNDS = new ArrayList<>();
 
     public static <T extends Item> Item buildItem(Class<T> clazz, String label) {
         Item item = null;
@@ -118,6 +121,13 @@ public class CommonRegistryMethods {
         return (TileEntityType<T>) te;
     }
 
+    public static SoundEvent buildSound(String label, SoundLocations prefix) {
+        final String finalId = StringID.ID + prefix.getPrefix() + label;
+        SoundEvent sound = new SoundEvent(new ResourceLocation(finalId)).setRegistryName(finalId);
+        SOUNDS.add(sound);
+        return sound;
+    }
+
     public static void registerItems(RegistryEvent.Register<Item> event) {
         if(!ITEMS.isEmpty()) {
             for(Item item : ITEMS) {
@@ -125,7 +135,7 @@ public class CommonRegistryMethods {
                 if(item instanceof BlockItem) {
                     regLog.info("Block Item with id:" + item.getRegistryName() + " has been registered.");
                 }else {
-                    regLog.info("Item with id:" + item.getRegistryName() + " has been registered.");
+                    regLog.info("Item with id: " + item.getRegistryName() + " has been registered.");
                 }
             }
             ITEMS.clear();
@@ -136,7 +146,7 @@ public class CommonRegistryMethods {
         if(!BLOCKS.isEmpty()) {
             for(Block block : BLOCKS) {
                 event.getRegistry().register(block);
-                regLog.info("Block with id:" + block.getRegistryName() + " has been registered.");
+                regLog.info("Block with id: " + block.getRegistryName() + " has been registered.");
             }
             BLOCKS.clear();
         }
@@ -146,7 +156,7 @@ public class CommonRegistryMethods {
         if(!ENTITIES.isEmpty()) {
             for(EntityType<?> entity : ENTITIES) {
                 event.getRegistry().register(entity);
-                regLog.info("Entity with id:" + entity.getRegistryName() + " has been registered.");
+                regLog.info("Entity with id: " + entity.getRegistryName() + " has been registered.");
             }
             ENTITIES.clear();
         }
@@ -156,9 +166,19 @@ public class CommonRegistryMethods {
         if(!TILE_ENTITIES.isEmpty()) {
             for(TileEntityType<?> te : TILE_ENTITIES) {
                 event.getRegistry().register(te);
-                regLog.info("Tile Entity with id:" + te.getRegistryName() + " has been registered.");
+                regLog.info("Tile Entity with id: " + te.getRegistryName() + " has been registered.");
             }
             TILE_ENTITIES.clear();
+        }
+    }
+
+    public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
+        if(!SOUNDS.isEmpty()) {
+            for(SoundEvent sound : SOUNDS) {
+                event.getRegistry().register(sound);
+                regLog.info("Sound with location: " + sound.getRegistryName() + " has been registered.");
+            }
+            SOUNDS.clear();
         }
     }
 

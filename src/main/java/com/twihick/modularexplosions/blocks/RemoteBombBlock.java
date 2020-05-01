@@ -33,7 +33,8 @@ public class RemoteBombBlock extends HorizontalFaceBlock {
 
     public RemoteBombBlock() {
         super(Block.Properties
-                .create(Material.IRON));
+                .create(Material.IRON)
+                .hardnessAndResistance(2.0F));
     }
 
     @Override
@@ -64,9 +65,7 @@ public class RemoteBombBlock extends HorizontalFaceBlock {
         if(itemstack.getItem() == ItemsList.REMOTE_CONTROLLER) {
             UUID uuid = playerIn.getUniqueID();
             RemoteBombTileEntity bomb = (RemoteBombTileEntity) worldIn.getTileEntity(pos);
-            if(bomb.playerLink == null) {
-                bomb.setPlayerLink(uuid);
-            }else if(bomb.playerLink != uuid) {
+            if(bomb.playerLink == null || bomb.playerLink != uuid) {
                 bomb.setPlayerLink(uuid);
                 playerIn.sendMessage(new StringTextComponent("This bomb is now linked !"));
                 return ActionResultType.SUCCESS;

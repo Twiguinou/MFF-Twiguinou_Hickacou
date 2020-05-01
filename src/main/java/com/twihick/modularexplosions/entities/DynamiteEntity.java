@@ -1,6 +1,7 @@
 package com.twihick.modularexplosions.entities;
 
 import com.twihick.modularexplosions.common.registry.EntitiesList;
+import com.twihick.modularexplosions.common.registry.SoundsList;
 import com.twihick.modularexplosions.util.world.CustomExplosion;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class DynamiteEntity extends Entity {
 
     private PlayerEntity owner;
-    private final int maxLifetime = 30;
+    private final int maxLifetime = 50;
     private int runningTicks = 0;
     private int power;
 
@@ -56,7 +57,7 @@ public class DynamiteEntity extends Entity {
             this.remove();
             if(!this.world.isRemote) {
                 CustomExplosion explosion = new CustomExplosion(this.world, this.getPosition(), this.power, 0.85F);
-                explosion.explodeExcluding(this);
+                explosion.explodeExcluding(this, SoundsList.DYNAMITE_BLAST);
             }
         }else {
             this.handleWaterMovement();

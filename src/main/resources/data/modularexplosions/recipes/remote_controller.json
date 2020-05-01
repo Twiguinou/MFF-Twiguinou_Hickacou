@@ -1,0 +1,43 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "remote_controller",
+  "pattern": [
+    "CRC",
+    "RBR",
+    "CRC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "B": [
+      {
+        "item": "minecraft:acacia_button"
+      },
+      {
+        "item": "minecraft:birch_button"
+      },
+      {
+        "item": "minecraft:dark_oak_button"
+      },
+      {
+        "item": "minecraft:jungle_button"
+      },
+      {
+        "item": "minecraft:oak_button"
+      },
+      {
+        "item": "minecraft:spruce_button"
+      },
+      {
+        "item": "minecraft:stone_button"
+      }
+    ]
+  },
+  "result": {
+    "item": "modularexplosions:remote_controller"
+  }
+}

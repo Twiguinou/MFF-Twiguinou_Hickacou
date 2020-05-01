@@ -1,0 +1,10 @@
+{
+  "item.dynamite.blast": {
+    "subtitle": "subtitle.modularexplosions.dynamite_blast",
+    "sounds": [ "modularexplosions:item/dynamite/blast" ]
+  },
+  "block.explosions.bomb_generic": {
+    "subtitle": "subtitlbe.modularexplosions.bomb_generic",
+    "sounds": [ "modularexplosions:block/explosions/bomb_explosion_generic" ]
+  }
+}

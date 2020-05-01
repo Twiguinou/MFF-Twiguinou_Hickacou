@@ -11,5 +11,7 @@
   "gui.button.modularexplosions.radiusTwoMinus": "Height -",
   "gui.button.modularexplosions.more": "+",
   "gui.button.modularexplosions.less": "-",
-  "gui.button.modularexplosions.activate": "Done"
+  "gui.button.modularexplosions.activate": "Done",
+  "subtitle.modularexplosions.dynamite_blast": "Dynamite blast sound effect",
+  "subtitle.modularexplosions.bomb_generic": "Generic bomb explosion sound effect"
 }

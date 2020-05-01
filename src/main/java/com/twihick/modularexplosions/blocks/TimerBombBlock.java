@@ -30,7 +30,8 @@ public class TimerBombBlock extends AbstractFacingAlignedBlock {
 
     public TimerBombBlock() {
         super(Block.Properties
-                .create(Material.IRON));
+                .create(Material.IRON)
+                .hardnessAndResistance(2.5F));
         this.setDefaultState(this.getStateContainer().getBaseState().with(ACTIVATED, Boolean.valueOf(false)));
     }
 
