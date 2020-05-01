@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 
@@ -30,6 +31,12 @@ public class ConfigurableBombBlock extends AbstractFacingAlignedBlock {
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader worldIn) {
         return new ConfigurableBombTileEntity();
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        super.fillStateContainer(builder);
+        builder.add(ACTIVATED);
     }
 
 }

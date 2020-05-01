@@ -1,7 +1,6 @@
 package com.twihick.modularexplosions.client.renderer;
 
 import com.twihick.modularexplosions.client.renderer.entity.DynamiteEntityRenderer;
-import com.twihick.modularexplosions.client.renderer.entity.ExplosiveArrowEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.entity.SmokeEffectEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.tileentity.ConfigurableBombTileEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.tileentity.RemoteBombTileEntityRenderer;
@@ -16,7 +15,6 @@ public class MasterRenderer {
     public static void entities() {
         RenderingRegistry.registerEntityRenderingHandler(EntitiesList.SMOKE_EFFECT, SmokeEffectEntityRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntitiesList.DYNAMITE, DynamiteEntityRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntitiesList.EXPLOSIVE_ARROW, ExplosiveArrowEntityRenderer::new);
     }
 
     public static void tileEntities() {

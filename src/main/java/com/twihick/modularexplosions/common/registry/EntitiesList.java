@@ -2,7 +2,6 @@ package com.twihick.modularexplosions.common.registry;
 
 import com.twihick.modularexplosions.StringID;
 import com.twihick.modularexplosions.entities.DynamiteEntity;
-import com.twihick.modularexplosions.entities.ExplosiveArrowEntity;
 import com.twihick.modularexplosions.entities.SmokeEffectEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -15,7 +14,6 @@ public class EntitiesList {
 
     public static final EntityType<SmokeEffectEntity> SMOKE_EFFECT = CommonRegistryMethods.buildEntity(SmokeEffectEntity.class, EntityClassification.MISC, 0.00001F, 0.00001F, IDS.SMOKE_EFFECT.getValue());
     public static final EntityType<DynamiteEntity> DYNAMITE = CommonRegistryMethods.buildEntity(DynamiteEntity.class, EntityClassification.MISC, 0.25F, 0.25F, IDS.DYNAMITE.getValue());
-    public static final EntityType<ExplosiveArrowEntity> EXPLOSIVE_ARROW = CommonRegistryMethods.buildEntity(ExplosiveArrowEntity.class, EntityClassification.MISC, 0.5F, 0.5F, IDS.EXPLOSIVE_ARROW.getValue());
 
     @SubscribeEvent
     public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
@@ -24,8 +22,7 @@ public class EntitiesList {
 
     private enum IDS {
         SMOKE_EFFECT("smoke_effect"),
-        DYNAMITE("dynamite"),
-        EXPLOSIVE_ARROW("explosive_arrow");
+        DYNAMITE("dynamite");
 
         private final String value;
         IDS(String label) {
