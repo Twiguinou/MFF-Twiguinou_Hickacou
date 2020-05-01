@@ -33,6 +33,7 @@ public class Main {
     public Main() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.commonConfigSpec);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CommonConfig.clientConfigSpec);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CommonConfig.serverConfigSpec);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::common);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::client);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::server);
