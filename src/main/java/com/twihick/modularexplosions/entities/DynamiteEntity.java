@@ -15,7 +15,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class DynamiteEntity extends Entity {
 
     private PlayerEntity owner;
-    private final int maxLifetime = 140;
+    private final int maxLifetime = 30;
     private int runningTicks = 0;
     private int power;
 
