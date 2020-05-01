@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "modularexplosions:block/configurable_bomb"
+    }
+  }
+}
