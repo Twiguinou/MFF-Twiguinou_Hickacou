@@ -24,7 +24,7 @@ public class ExplosiveBeltItem extends ArmorItem {
         if(KeyBindingsList.KEY_EXPLODE.isPressed() && !playerIn.isDiscrete()) {
             if(!worldIn.isRemote) {
                 playerIn.setItemStackToSlot(EquipmentSlotType.CHEST, ItemStack.EMPTY);
-                CustomExplosion explosion = new CustomExplosion(worldIn, playerIn.getPosition(), 3, 0.86196F);
+                CustomExplosion explosion = new CustomExplosion(worldIn, playerIn.getPosition(), 7, 0.86196F);
                 explosion.explodeExcluding(null, SoundsList.DYNAMITE_BLAST);
             }
         }
