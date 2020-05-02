@@ -20,10 +20,10 @@ public class ConfigurableBombScreen extends Screen {
     private final int ySize = 220;
 
     private final ConfigurableBombTileEntity bomb;
-    private Button radiusOnePlus;
-    private Button radiusOneMinus;
-    private Button radiusTwoPlus;
-    private Button radiusTwoMinus;
+    private Button widthPlus;
+    private Button widthMinus;
+    private Button heightPlus;
+    private Button heightMinus;
 
     public ConfigurableBombScreen(ConfigurableBombTileEntity bomb) {
         super(new TranslationTextComponent("gui.modularexplosions.configurable_bomb_screen"));
@@ -34,22 +34,22 @@ public class ConfigurableBombScreen extends Screen {
     public void init() {
         int leftCorner = (this.width-this.xSize) / 2;
         int topCorner = (this.height-this.ySize) / 2;
-        this.radiusOnePlus = this.addButton(new Button(leftCorner+10, topCorner+165, 80, 20, I18n.format("gui.button.modularexplosions.radiusOnePlus"), button -> {
-            this.bomb.setRadiusOne(this.bomb.radius_one+1);
+        this.widthPlus = this.addButton(new Button(leftCorner+10, topCorner+165, 80, 20, I18n.format("gui.button.modularexplosions.widthPlus"), button -> {
+            this.bomb.width++;
         }));
-        this.radiusOneMinus = this.addButton(new Button(leftCorner+10, topCorner+190, 80, 20, I18n.format("gui.button.modularexplosions.radiusOneMinus"), button -> {
-            this.bomb.setRadiusOne(this.bomb.radius_one-1);
+        this.widthMinus = this.addButton(new Button(leftCorner+10, topCorner+190, 80, 20, I18n.format("gui.button.modularexplosions.widthMinus"), button -> {
+            if (this.bomb.width-1 >= 0) this.bomb.width--;
         }));
-        this.radiusTwoPlus = this.addButton(new Button(leftCorner+130, topCorner+165, 80, 20, I18n.format("gui.button.modularexplosions.radiusTwoPlus"), button -> {
-            this.bomb.setRadiusTwo(this.bomb.radius_two+1);
+        this.heightPlus = this.addButton(new Button(leftCorner+130, topCorner+165, 80, 20, I18n.format("gui.button.modularexplosions.heightPlus"), button -> {
+            this.bomb.height++;
         }));
-        this.radiusTwoMinus = this.addButton(new Button(leftCorner+130, topCorner+190, 80, 20, I18n.format("gui.button.modularexplosions.radiusTwoMinus"), button -> {
-            this.bomb.setRadiusTwo(this.bomb.radius_two-1);
+        this.heightMinus = this.addButton(new Button(leftCorner+130, topCorner+190, 80, 20, I18n.format("gui.button.modularexplosions.heightMinus"), button -> {
+            if (this.bomb.height-1 >= 0) this.bomb.height--;
         }));
-        this.radiusOnePlus.active = true;
-        this.radiusOneMinus.active = true;
-        this.radiusTwoPlus.active = true;
-        this.radiusTwoMinus.active = true;
+        this.widthPlus.active = true;
+        this.widthMinus.active = true;
+        this.heightPlus.active = true;
+        this.heightMinus.active = true;
     }
 
     @Override
@@ -60,8 +60,8 @@ public class ConfigurableBombScreen extends Screen {
         int leftCorner = (this.width-this.xSize) / 2;
         int topCorner = (this.height-this.ySize) / 2;
         this.blit(leftCorner, topCorner, 0, 0, this.xSize, this.ySize);
-        String WIDTH_TEXT = "Width = " + this.bomb.radius_one;
-        String HEIGHT_TEXT = "Height = " + this.bomb.radius_two;
+        String WIDTH_TEXT = "Width = " + this.bomb.width;
+        String HEIGHT_TEXT = "Height = " + this.bomb.height;
         super.render(mouseX, mouseY, partialTicks);
         this.font.drawString(new StringTextComponent(WIDTH_TEXT).getFormattedText(), leftCorner+110-(font.getStringWidth(WIDTH_TEXT)/2), topCorner+60, Color.WHITE.getRGB());
         this.font.drawString(new StringTextComponent(HEIGHT_TEXT).getFormattedText(), leftCorner+110-(font.getStringWidth(HEIGHT_TEXT)/2), topCorner+100, Color.WHITE.getRGB());

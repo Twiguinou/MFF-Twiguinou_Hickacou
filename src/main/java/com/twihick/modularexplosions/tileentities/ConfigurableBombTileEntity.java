@@ -10,8 +10,8 @@ import javax.annotation.Nullable;
 
 public class ConfigurableBombTileEntity extends TileEntity {
 
-    public int radius_one = 10;
-    public int radius_two = 10;
+    public int width = 10;
+    public int height = 10;
 
     public ConfigurableBombTileEntity() {
         super(TileEntitiesList.CONFIGURABLE_BOMB);
@@ -19,27 +19,20 @@ public class ConfigurableBombTileEntity extends TileEntity {
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        compound.putInt("Radius One", this.radius_one);
-        compound.putInt("Radius Two", this.radius_two);
+        compound.putInt("width", this.width);
+        compound.putInt("height", this.height);
         return super.write(compound);
     }
 
-    public void setRadiusOne(int radius) {
-        this.radius_one = radius;
-    }
-
-    public void setRadiusTwo(int radius) {
-        this.radius_two = radius;
-    }
 
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        if(compound.contains("Radius One")) {
-            this.radius_one = compound.getInt("Radius One");
+        if(compound.contains("width")) {
+            this.width = compound.getInt("width");
         }
-        if(compound.contains("Radius Two")) {
-            this.radius_two = compound.getInt("Radius Two");
+        if(compound.contains("height")) {
+            this.height = compound.getInt("height");
         }
     }
 

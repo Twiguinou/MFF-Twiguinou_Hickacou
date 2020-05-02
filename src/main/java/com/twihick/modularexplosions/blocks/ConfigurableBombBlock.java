@@ -63,7 +63,7 @@ public class ConfigurableBombBlock extends Block {
         Item item = itemstack.getItem();
         if(item != Items.FLINT_AND_STEEL && item != Items.FIRE_CHARGE) {
             Minecraft.getInstance().displayGuiScreen(new ConfigurableBombScreen((ConfigurableBombTileEntity)worldIn.getTileEntity(pos)));
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, p_225533_6_);
+
         }else {
             catchFire(state, worldIn, pos, p_225533_6_.getFace(), player);
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
@@ -76,15 +76,15 @@ public class ConfigurableBombBlock extends Block {
                     itemstack.shrink(1);
                 }
             }
-            return ActionResultType.SUCCESS;
         }
+            return ActionResultType.SUCCESS;
     }
 
     private static void explode(World worldIn, BlockPos pos) {
         if(!worldIn.isRemote) {
             ConfigurableBombTileEntity bomb = (ConfigurableBombTileEntity) worldIn.getTileEntity(pos);
-            CustomExplosion explosion = new CustomExplosion(worldIn, pos, bomb.radius_one/2, 0);
-            explosion.explodeExcluding(null, bomb.radius_two/2, SoundsList.BOMB_GENERIC);
+            CustomExplosion explosion = new CustomExplosion(worldIn, pos, bomb.width /2, 0);
+            explosion.explodeExcluding(null, bomb.height /2, SoundsList.BOMB_GENERIC);
         }
     }
 
