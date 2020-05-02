@@ -33,9 +33,9 @@ public class ExplosiveBeltLayer<T extends PlayerEntity, K extends BipedModel<T>>
             this.getEntityModel().setModelAttributes(this.model);
             this.model.copyFromBipedModelAngles(this.getEntityModel());
             IVertexBuilder builder_base = ItemRenderer.getBuffer(buffer, this.model.getRenderType(TEXTURE_BASE), false, false);
-            this.model.renderBase(matrix, builder_base, light, OverlayTexture.NO_OVERLAY, 1.0F, 2.0F, 2.0F, 2.0F);
+            this.model.renderBase(matrix, builder_base, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             IVertexBuilder builder_dynamite = ItemRenderer.getBuffer(buffer, this.model.getRenderType(TEXTURE_DYNAMITE), false, false);
-            this.model.renderDynamite(matrix, builder_dynamite, light, OverlayTexture.NO_OVERLAY, 1.0F, 2.0F, 2.0F, 2.0F);
+            this.model.renderDynamite(matrix, builder_dynamite, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             matrix.pop();
         }
     }

@@ -20,10 +20,10 @@ public class ExplosiveBeltModel<T extends LivingEntity> extends BipedModel<T> {
         belt_base.setTextureOffset(0, 0).addBox(-4.0F, 3.5F, -2.5F, 8.0F, 7.0F, 5.0F, 0.0F);
         belt_dynamite = new ModelRenderer(this);
         belt_dynamite.setRotationPoint(0.0F, 24.0F, 0.0F);
-        belt_dynamite.setTextureOffset(0, 0).addBox(-3.25F, -19.0F, -3.0F, 1.0F, 5.0F, 6.0F, 0.0F, false);
-        belt_dynamite.setTextureOffset(0, 0).addBox(-1.25F, -19.0F, -3.0F, 1.0F, 5.0F, 6.0F, 0.0F, false);
-        belt_dynamite.setTextureOffset(0, 0).addBox(2.375F, -19.0F, -3.0F, 1.0F, 5.0F, 6.0F, 0.0F, false);
-        belt_dynamite.setTextureOffset(0, 0).addBox(0.5F, -19.0F, -3.0F, 1.0F, 5.0F, 6.0F, 0.0F, false);
+        belt_dynamite.setTextureOffset(0, 0).addBox(-3.3125F, -19.0F, -3.0F, 1.0F, 5.0F, 6.0F, 0.0F, false);
+        belt_dynamite.setTextureOffset(0, 0).addBox(-1.4375F, -19.0F, -3.0F, 1.0F, 5.0F, 6.0F, 0.0F, false);
+        belt_dynamite.setTextureOffset(0, 0).addBox(2.3125F, -19.0F, -3.0F, 1.0F, 5.0F, 6.0F, 0.0F, false);
+        belt_dynamite.setTextureOffset(0, 0).addBox(0.4375F, -19.0F, -3.0F, 1.0F, 5.0F, 6.0F, 0.0F, false);
     }
 
     public void renderBase(MatrixStack matrix, IVertexBuilder builder, int light, int texture, float r, float g, float b, float a) {

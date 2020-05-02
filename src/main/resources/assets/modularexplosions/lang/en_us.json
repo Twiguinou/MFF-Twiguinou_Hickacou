@@ -6,6 +6,7 @@
   "item.modularexplosions.remote_controller": "Remote Controller",
   "item.modularexplosions.throwable_dynamite": "Dynamite",
   "item.modularexplosions.explosive_belt": "Explosive Belt",
+  "item.modularexplosions.grenade_launcher": "Grenade Launcher",
   "gui.button.modularexplosions.widthPlus": "Width +",
   "gui.button.modularexplosions.widthMinus": "Width -",
   "gui.button.modularexplosions.heightPlus": "Height +",
@@ -14,6 +15,8 @@
   "gui.button.modularexplosions.less": "-",
   "gui.button.modularexplosions.activate": "Done",
   "subtitle.modularexplosions.dynamite_blast": "Dynamite blast sound effect",
+  "subtitle.modularexplosions.grenade_launcher_reload": "Grenade launcher reload sound effect",
+  "subtitle.modularexplosions.grenade_launcher_empty": "Grenade launcher empty sound effect",
   "subtitle.modularexplosions.bomb_generic": "Generic bomb explosion sound effect",
   "key.modularexplosions.explode": "Explode yourself, please don't"
 }

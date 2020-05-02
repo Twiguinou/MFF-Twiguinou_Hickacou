@@ -3,6 +3,14 @@
     "subtitle": "subtitle.modularexplosions.dynamite_blast",
     "sounds": [ "modularexplosions:item/dynamite/blast" ]
   },
+  "item.grenade_launcher.reload": {
+    "subtitle": "subtitle.modularexplosions.grenade_launcher_reload",
+    "sounds": [ "modularexplosions:item/grenade_launcher/reload" ]
+  },
+  "item.grenade_launcher.empty": {
+    "subtitle": "subtitle.modularexplosions.grenade_launcher_empty",
+    "sounds": [ "modularexplosions:item/grenade_launcher/empty" ]
+  },
   "block.explosions.bomb_generic": {
     "subtitle": "subtitlbe.modularexplosions.bomb_generic",
     "sounds": [ "modularexplosions:block/explosions/bomb_explosion_generic" ]
