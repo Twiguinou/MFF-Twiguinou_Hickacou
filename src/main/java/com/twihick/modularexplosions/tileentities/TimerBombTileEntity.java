@@ -33,7 +33,7 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
             }
             if(runningTicks <= 0) {
                 this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
-                CustomExplosion customExplosion = new CustomExplosion(this.world, this.getPos(), 5, 0.8492F);
+                CustomExplosion customExplosion = new CustomExplosion(this.world, this.getPos(), 7, 0.8492F);
                 customExplosion.explodeExcluding(null, SoundsList.BOMB_GENERIC);
                 this.remove();
             }
