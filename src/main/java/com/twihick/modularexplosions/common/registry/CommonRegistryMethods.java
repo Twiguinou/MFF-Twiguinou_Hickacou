@@ -44,17 +44,6 @@ public class CommonRegistryMethods {
         return item;
     }
 
-    public static <T extends Item> Item replaceItem(Class<T> clazz, String label) {
-        Item item = null;
-        try {
-            item = clazz.newInstance().setRegistryName("minecraft:"+label);
-            ITEMS.add(item);
-        }catch(InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return item;
-    }
-
     /*
     With auto-generated Block-Item.
      */
@@ -64,17 +53,6 @@ public class CommonRegistryMethods {
             block = clazz.newInstance().setRegistryName(createName(label));
             BLOCKS.add(block);
             ITEMS.add(new BlockItem(block, new Item.Properties().group(group != null ? group : Main.getGroup())).setRegistryName(block.getRegistryName()));
-        }catch(InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return block;
-    }
-
-    public static <T extends Block> Block buildBlockOnly(Class<T> clazz, String label) {
-        Block block = null;
-        try {
-            block = clazz.newInstance().setRegistryName(createName(label));
-            BLOCKS.add(block);
         }catch(InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }

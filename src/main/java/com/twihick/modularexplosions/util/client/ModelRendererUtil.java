@@ -20,13 +20,11 @@ public class ModelRendererUtil {
         matrix.push();
         ForgeHooksClient.handleCameraTransforms(matrix, model, ItemCameraTransforms.TransformType.NONE, false);
         matrix.translate(-0.5D, -0.5D, -0.5D);
-        if(!model.isBuiltInRenderer()) {
-            IVertexBuilder builder = buffer.getBuffer(Atlases.getSolidBlockType());
-            for(Direction direction : Direction.values()) {
-                renderQuads(matrix, builder, model.getQuads(null, direction, new Random()), light);
-            }
-            renderQuads(matrix, builder, model.getQuads(null, null, new Random()), light);
+        IVertexBuilder builder = buffer.getBuffer(Atlases.getSolidBlockType());
+        for(Direction direction : Direction.values()) {
+            renderQuads(matrix, builder, model.getQuads(null, direction, new Random()), light);
         }
+        renderQuads(matrix, builder, model.getQuads(null, null, new Random()), light);
         matrix.pop();
     }
 

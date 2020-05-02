@@ -1,33 +1,10 @@
 package com.twihick.modularexplosions.util;
 
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
 public class ShapeUtil {
-
-    public static VoxelShape combineAllShapes(VoxelShape[] shapes) {
-        VoxelShape newShape = VoxelShapes.empty();
-        if(shapes.length > 0) {
-            for(VoxelShape shape : shapes) {
-                VoxelShapes.combine(newShape, shape, IBooleanFunction.OR);
-            }
-            newShape.simplify();
-        }
-        return newShape;
-    }
-
-    public static VoxelShape combineShapes(VoxelShape... shapes) {
-        VoxelShape newShape = VoxelShapes.empty();
-        if(shapes.length > 0) {
-            for(VoxelShape shape : shapes) {
-                VoxelShapes.combine(newShape, shape, IBooleanFunction.OR);
-            }
-            newShape.simplify();
-        }
-        return newShape;
-    }
 
     public static VoxelShape rotateShape(VoxelShape shape, Direction direction) {
         double coord0 = shape.getStart(Direction.Axis.X);
@@ -60,15 +37,6 @@ public class ShapeUtil {
                 break;
         }
         return VoxelShapes.create(coord0, shape.getStart(Direction.Axis.Y), coord1, coord2, shape.getEnd(Direction.Axis.Y), coord3);
-    }
-
-    public static VoxelShape[] getDirectionShape(VoxelShape shape) {
-        return new VoxelShape[] {
-                rotateShape(shape, Direction.SOUTH),
-                rotateShape(shape, Direction.WEST),
-                rotateShape(shape, Direction.EAST),
-                rotateShape(shape, Direction.NORTH)
-        };
     }
 
 }

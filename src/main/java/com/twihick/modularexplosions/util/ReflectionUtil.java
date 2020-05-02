@@ -13,9 +13,7 @@ public class ReflectionUtil {
 
     public static void addLayerToPlayerModel(PlayerRenderer playerRenderer, LayerRenderer layerRenderer) {
         List<LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>> layers = ObfuscationReflectionHelper.getPrivateValue(LivingRenderer.class, playerRenderer, "layerRenderers");
-        if(layers != null) {
-            layers.add(layerRenderer);
-        }
+        layers.add(layerRenderer);
     }
 
 }
