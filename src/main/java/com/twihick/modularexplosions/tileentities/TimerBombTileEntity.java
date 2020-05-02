@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 
 public class TimerBombTileEntity extends TileEntity implements ITickableTileEntity {
 
-    public int runningTicks = 500;
+    public int runningTicks = 0;
 
     public TimerBombTileEntity() {
         super(TileEntitiesList.TIMER_BOMB);
@@ -41,7 +41,7 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
     }
 
     public int[] computeTime() {
-        int secs = this.runningTicks / 20;
+        int secs = Math.round(this.runningTicks / 20);
         int mins = (int)Math.floor(secs/60);
         secs -= mins * 60;
         return new int[]{mins, secs};

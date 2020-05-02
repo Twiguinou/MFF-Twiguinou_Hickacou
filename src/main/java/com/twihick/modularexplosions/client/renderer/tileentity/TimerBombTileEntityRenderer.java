@@ -22,6 +22,7 @@ public class TimerBombTileEntityRenderer extends TileEntityRenderer<TimerBombTil
 
     @Override
     public void render(TimerBombTileEntity bomb, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int light, int texture) {
+        if (!bomb.isBlockActivated()) return;
         BlockState state = bomb.getBlockState();
         if(state.getBlock() instanceof TimerBombBlock) {
             matrix.push();
