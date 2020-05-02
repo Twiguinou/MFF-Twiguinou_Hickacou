@@ -4,6 +4,7 @@ import com.twihick.modularexplosions.Main;
 import com.twihick.modularexplosions.StringID;
 import com.twihick.modularexplosions.client.registry.KeyBindingsList;
 import com.twihick.modularexplosions.common.registry.SoundsList;
+import com.twihick.modularexplosions.util.client.KeyboardUtil;
 import com.twihick.modularexplosions.util.world.CustomExplosion;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,9 +22,11 @@ public class ExplosiveBeltItem extends ArmorItem {
 
     @Override
     public void onArmorTick(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-        if(KeyBindingsList.KEY_EXPLODE.isPressed() && !playerIn.isDiscrete()) {
+        if(KeyboardUtil.isKeyPressed(KeyBindingsList.KEY_EXPLODE) && !playerIn.isDiscrete()) {
             if(!worldIn.isRemote) {
-                playerIn.setItemStackToSlot(EquipmentSlotType.CHEST, ItemStack.EMPTY);
+                if(!playerIn.isCreative()) {
+                    playerIn.setItemStackToSlot(EquipmentSlotType.CHEST, ItemStack.EMPTY);
+                }
                 CustomExplosion explosion = new CustomExplosion(worldIn, playerIn.getPosition(), 7, 0.86196F);
                 explosion.explodeExcluding(null, SoundsList.DYNAMITE_BLAST);
             }
