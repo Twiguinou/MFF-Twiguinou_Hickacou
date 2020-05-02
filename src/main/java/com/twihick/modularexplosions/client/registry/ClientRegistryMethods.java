@@ -1,5 +1,6 @@
 package com.twihick.modularexplosions.client.registry;
 
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -20,6 +21,10 @@ public class ClientRegistryMethods {
         AssociativeModel model = new AssociativeModel(label, prefix);
         MODELS.add(model);
         return model;
+    }
+
+    public static KeyBinding buildKeyBinding(String label, int keyCode, KeyCategories category) {
+        return new KeyBinding("key.modularexplosions." + label, keyCode, category.getValue());
     }
 
     @OnlyIn(Dist.CLIENT)
