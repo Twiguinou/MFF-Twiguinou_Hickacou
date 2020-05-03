@@ -14,7 +14,10 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ExplosiveBeltLayer<T extends PlayerEntity, K extends BipedModel<T>> extends LayerRenderer<T, K> {
 
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation(StringID.ID, "textures/models/entity/explosive_belt_base.png");

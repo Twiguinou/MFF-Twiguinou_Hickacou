@@ -20,6 +20,8 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
@@ -45,9 +47,10 @@ public class TimerBombBlock extends AbstractFacingAlignedBlock {
         return ShapeUtil.rotateShape(SHAPE, state.get(DIRECTION));
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult rtr) {
-        if (!state.get(this.ACTIVATED).booleanValue()) {
+        if(!state.get(this.ACTIVATED).booleanValue()) {
             Minecraft.getInstance().displayGuiScreen(new TimerBombScreen((TimerBombTileEntity) worldIn.getTileEntity(pos)));
         }
         return ActionResultType.SUCCESS;
