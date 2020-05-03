@@ -12,7 +12,7 @@ import java.util.List;
 public class ReflectionUtil {
 
     public static void addLayerToPlayerModel(PlayerRenderer playerRenderer, LayerRenderer layerRenderer) {
-        List<LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>> layers = ObfuscationReflectionHelper.getPrivateValue(LivingRenderer.class, playerRenderer, "layerRenderers");
+        List<LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>>> layers = ObfuscationReflectionHelper.getPrivateValue(LivingRenderer.class, playerRenderer, "field_177097");
         layers.add(layerRenderer);
     }
 
