@@ -42,11 +42,13 @@ public class GrenadeLauncherItem extends Item {
                 worldIn.addEntity(grenade);
             }
             setLoaded(itemstack, false);
-            worldIn.playMovingSound((PlayerEntity)null, playerIn, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 0.2F+this.random.nextFloat());
+            worldIn.playMovingSound((PlayerEntity)null, playerIn, SoundsList.GRENADE_LAUNCHER_FIRE, SoundCategory.PLAYERS, 0.78F, -((0.2F+this.random.nextFloat()*2+this.random.nextFloat())));
             return ActionResult.resultPass(itemstack);
         }else if(InventoryUtil.hasItemInInventory(ItemsList.GRENADE, playerIn)){
             ItemStack ammo = InventoryUtil.getItemStackFromInventory(ItemsList.GRENADE, playerIn);
-            ammo.setCount(ammo.getCount()-1);
+            if(!playerIn.isCreative()) {
+                ammo.setCount(ammo.getCount()-1);
+            }
             setLoaded(itemstack, true);
             float pitch = this.random.nextFloat() * 0.3F;
             worldIn.playMovingSound((PlayerEntity)null, playerIn, SoundsList.GRENADE_LAUNCHER_RELOAD, SoundCategory.PLAYERS, 1.0F, -pitch);

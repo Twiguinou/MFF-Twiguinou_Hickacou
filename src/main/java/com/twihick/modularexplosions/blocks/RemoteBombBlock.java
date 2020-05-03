@@ -63,16 +63,18 @@ public class RemoteBombBlock extends HorizontalFaceBlock {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult rtr) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         if(itemstack.getItem() == ItemsList.REMOTE_CONTROLLER) {
-            UUID uuid = playerIn.getUniqueID();
-            RemoteBombTileEntity bomb = (RemoteBombTileEntity) worldIn.getTileEntity(pos);
-            if(bomb.playerLink == null || bomb.playerLink != uuid) {
-                bomb.setPlayerLink(uuid);
-                playerIn.sendMessage(new StringTextComponent("This bomb is now linked !"));
-                return ActionResultType.SUCCESS;
-            }else {
-                playerIn.sendMessage(new StringTextComponent("This bomb is already linked !"));
+            if(worldIn.isRemote) {
+                UUID uuid = playerIn.getUniqueID();
+                RemoteBombTileEntity bomb = (RemoteBombTileEntity) worldIn.getTileEntity(pos);
+                if(bomb.playerLink == null || bomb.playerLink != uuid) {
+                    bomb.setPlayerLink(uuid);
+                    playerIn.sendMessage(new StringTextComponent("This bomb is now linked !"));
+                    return ActionResultType.SUCCESS;
+                }else {
+                    playerIn.sendMessage(new StringTextComponent("This bomb is already linked !"));
+                }
+                return ActionResultType.PASS;
             }
-            return ActionResultType.PASS;
         }
         return ActionResultType.FAIL;
     }

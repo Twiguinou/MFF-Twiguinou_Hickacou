@@ -18,6 +18,7 @@
   "subtitle.modularexplosions.dynamite_blast": "Dynamite blast sound effect",
   "subtitle.modularexplosions.grenade_launcher_reload": "Grenade launcher reload sound effect",
   "subtitle.modularexplosions.grenade_launcher_empty": "Grenade launcher empty sound effect",
+  "subtitle.modularexplosions.grenade_launcher_fire": "Grenade launcher fire sound effect",
   "subtitle.modularexplosions.bomb_generic": "Generic bomb explosion sound effect",
-  "key.modularexplosions.explode": "Explode yourself, please don't"
+  "key.modularexplosions.explode": "To explode yourself, but please don't"
 }

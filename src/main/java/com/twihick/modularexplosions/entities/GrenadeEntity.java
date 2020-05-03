@@ -9,7 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -28,7 +28,7 @@ public class GrenadeEntity extends Entity {
     public GrenadeEntity(World worldIn, PlayerEntity thrower) {
         this(worldIn);
         this.setPositionAndRotation(thrower.getPosX(), thrower.getPosY()+thrower.getEyeHeight(), thrower.getPosZ(), thrower.getYaw(1.0F), 0.0F);
-        Vec3d motion = thrower.getLookVec().scale(1.6F).add(thrower.getMotion());
+        Vec3d motion = thrower.getLookVec().scale(0.85F).add(thrower.getMotion());
         this.setRotation(this.rotationYaw, (float)Math.asin(-motion.y));
         this.setMotion(motion);
     }
@@ -44,11 +44,11 @@ public class GrenadeEntity extends Entity {
         this.move(MoverType.SELF, this.getMotion());
         if(this.onGround) {
             this.setMotion(Vec3d.ZERO);
-            this.setRotation(this.getYaw(1.0F), 0.0F);
         }else if(this.collidedHorizontally) {
             this.setMotion(new Vec3d(-this.getMotion().x, this.getMotion().y, -this.getMotion().z).scale(0.5D));
         }else {
             this.setMotion(adjustedMotion);
+            this.calculateYaw(this.getMotion());
         }
         this.primer--;
         if(this.primer <= 0) {
@@ -62,8 +62,21 @@ public class GrenadeEntity extends Entity {
         }
     }
 
+    private void calculateYaw(Vec3d vec) {
+        double vecX = vec.x;
+        double vecY = vec.y;
+        double vecZ = vec.z;
+        float f = MathHelper.sqrt(horizontalMag(vec));
+        float yaw = (float) (MathHelper.atan2(vecX, vecZ)*(double)(180/(float)Math.PI));
+        float pitch = (float) (MathHelper.atan2(vecY, (double)f)*(double)(180F/(float)Math.PI));
+        this.rotationYaw = yaw;
+        this.rotationPitch = pitch;
+        this.prevRotationYaw = yaw;
+        this.prevRotationPitch = pitch;
+    }
+
     /*
-    All of these methods pasted from DynamiteEntity.
+    All of these methods were pasted from DynamiteEntity.
      */
 
     @Override

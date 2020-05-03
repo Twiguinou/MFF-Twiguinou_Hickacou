@@ -11,6 +11,10 @@
     "subtitle": "subtitle.modularexplosions.grenade_launcher_empty",
     "sounds": [ "modularexplosions:item/grenade_launcher/empty" ]
   },
+  "item.grenade_launcher.fire": {
+    "subtitle": "subtitle.modularexplosions.grenade_launcher_fire",
+    "sounds": [ "modularexplosions:item/grenade_launcher/fire" ]
+  },
   "block.explosions.bomb_generic": {
     "subtitle": "subtitlbe.modularexplosions.bomb_generic",
     "sounds": [ "modularexplosions:block/explosions/bomb_explosion_generic" ]
