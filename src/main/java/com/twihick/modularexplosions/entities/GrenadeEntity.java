@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -45,7 +46,21 @@ public class GrenadeEntity extends Entity {
         if(this.onGround) {
             this.setMotion(Vec3d.ZERO);
         }else if(this.collidedHorizontally) {
-            this.setMotion(new Vec3d(-this.getMotion().x, this.getMotion().y, -this.getMotion().z).scale(0.5D));
+            Direction direction = Direction.getFacingFromVector(this.getMotion().x, this.getMotion().y, this.getMotion().z);
+            switch(direction) {
+                case EAST:
+                    this.setMotion(new Vec3d(this.getMotion().x, this.getMotion().y, -this.getMotion().z).scale(0.7D));
+                    break;
+                case SOUTH:
+                    this.setMotion(new Vec3d(-this.getMotion().x, this.getMotion().y, this.getMotion().z).scale(0.7D));
+                    break;
+                case WEST:
+                    this.setMotion(new Vec3d(this.getMotion().x, this.getMotion().y, -this.getMotion().z).scale(0.7D));
+                    break;
+                default:
+                    this.setMotion(new Vec3d(-this.getMotion().x, this.getMotion().y, this.getMotion().z).scale(0.7D));
+                    break;
+            }
         }else {
             this.setMotion(adjustedMotion);
             this.calculateYaw(this.getMotion());

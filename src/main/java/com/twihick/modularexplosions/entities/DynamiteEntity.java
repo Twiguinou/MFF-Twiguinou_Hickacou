@@ -12,6 +12,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -51,7 +52,21 @@ public class DynamiteEntity extends Entity {
             this.setMotion(new Vec3d(this.getMotion().x*0.7D, -this.getMotion().y*0.98D, this.getMotion().z*0.7D));
             this.setRotation(this.getYaw(1.0F), 0.0F);
         }else if(this.collidedHorizontally) {
-            this.setMotion(new Vec3d(-this.getMotion().x, this.getMotion().y, -this.getMotion().z).scale(0.5D));
+            Direction direction = Direction.getFacingFromVector(this.getMotion().x, this.getMotion().y, this.getMotion().z);
+            switch(direction) {
+                case EAST:
+                    this.setMotion(new Vec3d(this.getMotion().x, this.getMotion().y, -this.getMotion().z).scale(0.7D));
+                    break;
+                case SOUTH:
+                    this.setMotion(new Vec3d(-this.getMotion().x, this.getMotion().y, this.getMotion().z).scale(0.7D));
+                    break;
+                case WEST:
+                    this.setMotion(new Vec3d(this.getMotion().x, this.getMotion().y, -this.getMotion().z).scale(0.7D));
+                    break;
+                default:
+                    this.setMotion(new Vec3d(-this.getMotion().x, this.getMotion().y, this.getMotion().z).scale(0.7D));
+                    break;
+            }
         }else {
             this.setRotation(this.getYaw(1.0F), this.getPitch(1.0F)+7.5F);
             this.setMotion(adjustedMotion);
