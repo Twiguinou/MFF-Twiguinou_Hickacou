@@ -3,6 +3,7 @@ package com.twihick.modularexplosions.items;
 import com.twihick.modularexplosions.Main;
 import com.twihick.modularexplosions.blocks.RemoteBombBlock;
 import com.twihick.modularexplosions.tileentities.RemoteBombTileEntity;
+import com.twihick.modularexplosions.util.world.CustomExplosion;
 import com.twihick.modularexplosions.util.world.WorldUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +14,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -40,7 +40,7 @@ public class RemoteControllerItem extends Item {
                     RemoteBombTileEntity bomb = (RemoteBombTileEntity) worldIn.getTileEntity(pos);
                     if(bomb.playerLink != null) {
                         if(bomb.playerLink == playerIn.getUniqueID()) {
-                            worldIn.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 4.0F, Explosion.Mode.BREAK);
+                            bomb.setActivated();
                         }
                     }
                 }

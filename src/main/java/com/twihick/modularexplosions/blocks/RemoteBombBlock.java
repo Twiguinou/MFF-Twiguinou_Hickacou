@@ -1,6 +1,7 @@
 package com.twihick.modularexplosions.blocks;
 
 import com.twihick.modularexplosions.common.registry.ItemsList;
+import com.twihick.modularexplosions.properties.ExtendedBlockStateProperties;
 import com.twihick.modularexplosions.tileentities.RemoteBombTileEntity;
 import com.twihick.modularexplosions.util.ShapeUtil;
 import net.minecraft.block.Block;
@@ -9,6 +10,7 @@ import net.minecraft.block.HorizontalFaceBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.AttachFace;
 import net.minecraft.tileentity.TileEntity;
@@ -27,6 +29,8 @@ import java.util.UUID;
 
 public class RemoteBombBlock extends HorizontalFaceBlock {
 
+    public static final BooleanProperty ACTIVATED = ExtendedBlockStateProperties.ACTIVATED;
+
     public static final VoxelShape FLOOR_SHAPE = Block.makeCuboidShape(4.25D, 0.0D, 6.1D, 12.5D, 2.0D, 10.0D);
     public static final VoxelShape CEILING_SHAPE = Block.makeCuboidShape(3.5D, 14.0D, 5.95D, 11.75D, 16.0D, 10.0D);
     public static final VoxelShape WALL_SHAPE = Block.makeCuboidShape(3.5D, 6.0D, 14.0D, 11.75D, 10.0D, 16.0D);
@@ -35,6 +39,7 @@ public class RemoteBombBlock extends HorizontalFaceBlock {
         super(Block.Properties
                 .create(Material.IRON)
                 .hardnessAndResistance(2.0F));
+        this.setDefaultState(this.getStateContainer().getBaseState().with(ACTIVATED, Boolean.valueOf(false)));
     }
 
     @Override
@@ -63,7 +68,7 @@ public class RemoteBombBlock extends HorizontalFaceBlock {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult rtr) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         if(itemstack.getItem() == ItemsList.REMOTE_CONTROLLER) {
-            if(worldIn.isRemote) {
+            if(!worldIn.isRemote) {
                 UUID uuid = playerIn.getUniqueID();
                 RemoteBombTileEntity bomb = (RemoteBombTileEntity) worldIn.getTileEntity(pos);
                 if(bomb.playerLink == null || bomb.playerLink != uuid) {
@@ -91,7 +96,7 @@ public class RemoteBombBlock extends HorizontalFaceBlock {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(HORIZONTAL_FACING, FACE);
+        builder.add(HORIZONTAL_FACING, FACE, ACTIVATED);
     }
 
 }
