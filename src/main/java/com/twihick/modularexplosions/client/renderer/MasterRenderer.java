@@ -2,7 +2,6 @@ package com.twihick.modularexplosions.client.renderer;
 
 import com.twihick.modularexplosions.client.renderer.entity.DynamiteEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.entity.GrenadeEntityRenderer;
-import com.twihick.modularexplosions.client.renderer.entity.SmokeEffectEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.tileentity.ConfigurableBombTileEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.tileentity.RemoteBombTileEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.tileentity.TimerBombTileEntityRenderer;
@@ -14,7 +13,6 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 public class MasterRenderer {
 
     public static void entities() {
-        RenderingRegistry.registerEntityRenderingHandler(EntitiesList.SMOKE_EFFECT, SmokeEffectEntityRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntitiesList.DYNAMITE, DynamiteEntityRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntitiesList.GRENADE, GrenadeEntityRenderer::new);
     }
