@@ -1,10 +1,7 @@
 package com.twihick.modularexplosions.common.registry;
 
 import com.twihick.modularexplosions.StringID;
-import com.twihick.modularexplosions.items.ExplosiveBeltItem;
-import com.twihick.modularexplosions.items.GrenadeLauncherItem;
-import com.twihick.modularexplosions.items.RemoteControllerItem;
-import com.twihick.modularexplosions.items.ThrowableDynamiteItem;
+import com.twihick.modularexplosions.items.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,6 +14,7 @@ public class ItemsList {
     public static final Item THROWABLE_DYNAMITE = CommonRegistryMethods.buildItem(ThrowableDynamiteItem.class, IDS.THROWABLE_DYNAMITE.getValue());
     public static final Item EXPLOSIVE_BELT = CommonRegistryMethods.buildItem(ExplosiveBeltItem.class, IDS.EXPLOSIVE_BELT.getValue());
     public static final Item GRENADE_LAUNCHER = CommonRegistryMethods.buildItem(GrenadeLauncherItem.class, IDS.GRENADE_LAUNCHER.getValue());
+    public static final Item GRENADE = CommonRegistryMethods.buildItem(GrenadeItem.class, IDS.GRENADE.getValue());
 
     @SubscribeEvent
     public static void registerItems(final RegistryEvent.Register<Item> event) {
@@ -27,7 +25,8 @@ public class ItemsList {
         REMOTE_CONTROLLER("remote_controller"),
         THROWABLE_DYNAMITE("throwable_dynamite"),
         EXPLOSIVE_BELT("explosive_belt"),
-        GRENADE_LAUNCHER("grenade_launcher");
+        GRENADE_LAUNCHER("grenade_launcher"),
+        GRENADE("grenade");
 
         private final String value;
         IDS(String label) {

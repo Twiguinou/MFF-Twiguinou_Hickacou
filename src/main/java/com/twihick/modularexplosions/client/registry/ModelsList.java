@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ModelsList {
 
     public static final AssociativeModel DYNAMITE = ClientRegistryMethods.buildModel(IDS.DYNAMITE.getValue(), ModelLocations.CUSTOMS);
+    public static final AssociativeModel GRENADE = ClientRegistryMethods.buildModel(IDS.GRENADE.getValue(), ModelLocations.CUSTOMS);
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
@@ -19,7 +20,8 @@ public class ModelsList {
     }
 
     private enum IDS {
-        DYNAMITE("dynamite");
+        DYNAMITE("dynamite"),
+        GRENADE("grenade");
 
         private final String value;
         IDS(String label) {

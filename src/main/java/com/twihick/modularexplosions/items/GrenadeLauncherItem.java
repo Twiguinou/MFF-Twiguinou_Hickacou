@@ -1,12 +1,13 @@
 package com.twihick.modularexplosions.items;
 
 import com.twihick.modularexplosions.Main;
+import com.twihick.modularexplosions.common.registry.ItemsList;
 import com.twihick.modularexplosions.common.registry.SoundsList;
+import com.twihick.modularexplosions.entities.GrenadeEntity;
 import com.twihick.modularexplosions.util.InventoryUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
@@ -34,16 +35,17 @@ public class GrenadeLauncherItem extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
-        playerIn.getCooldownTracker().setCooldown(this, 10);
+        playerIn.getCooldownTracker().setCooldown(this, 15);
         if(isLoaded(itemstack)) {
-            /*
-            TODO: Add entity shooting and sound event !
-             */
+            if(!worldIn.isRemote) {
+                GrenadeEntity grenade = new GrenadeEntity(worldIn, playerIn);
+                worldIn.addEntity(grenade);
+            }
             setLoaded(itemstack, false);
             worldIn.playMovingSound((PlayerEntity)null, playerIn, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 0.2F+this.random.nextFloat());
-            return ActionResult.resultSuccess(itemstack);
-        }else if(InventoryUtil.hasItemInInventory(Items.ARROW, playerIn)){
-            ItemStack ammo = InventoryUtil.getItemStackFromInventory(Items.ARROW, playerIn);
+            return ActionResult.resultPass(itemstack);
+        }else if(InventoryUtil.hasItemInInventory(ItemsList.GRENADE, playerIn)){
+            ItemStack ammo = InventoryUtil.getItemStackFromInventory(ItemsList.GRENADE, playerIn);
             ammo.setCount(ammo.getCount()-1);
             setLoaded(itemstack, true);
             float pitch = this.random.nextFloat() * 0.3F;

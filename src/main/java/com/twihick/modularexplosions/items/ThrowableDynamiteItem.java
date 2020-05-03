@@ -27,6 +27,7 @@ public class ThrowableDynamiteItem extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
+        playerIn.getCooldownTracker().setCooldown(this, 10);
         if(!worldIn.isRemote) {
             DynamiteEntity dynamite = new DynamiteEntity(worldIn, playerIn, 4, 1.05D);
             worldIn.addEntity(dynamite);

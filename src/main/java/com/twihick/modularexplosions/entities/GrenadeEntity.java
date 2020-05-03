@@ -9,67 +9,62 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class DynamiteEntity extends Entity {
+public class GrenadeEntity extends Entity {
 
-    public static final DataParameter<Integer> PRIMER = EntityDataManager.createKey(DynamiteEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> PRIMER = DynamiteEntity.PRIMER;
 
-    private PlayerEntity owner;
-    private int primer = 60;
-    private int power;
+    private final int power = 4;
+    private int primer = 65;
 
-    public DynamiteEntity(World worldIn) {
-        super(EntitiesList.DYNAMITE, worldIn);
-        this.preventEntitySpawning = true;
+    public GrenadeEntity(World worldIn) {
+        super(EntitiesList.GRENADE, worldIn);
     }
 
-    public DynamiteEntity(World worldIn, PlayerEntity thrower, int power, double speedFactor) {
+    public GrenadeEntity(World worldIn, PlayerEntity thrower) {
         this(worldIn);
-        this.owner = thrower;
-        this.power = power;
-        this.setPositionAndRotation(thrower.getPosX(), thrower.getPosY()+thrower.getEyeHeight(), thrower.getPosZ(), thrower.rotationYaw, 0.0F);
-        Vec3d motion = thrower.getLookVec().scale(speedFactor).add(thrower.getMotion());
+        this.setPositionAndRotation(thrower.getPosX(), thrower.getPosY()+thrower.getEyeHeight(), thrower.getPosZ(), thrower.getYaw(1.0F), 0.0F);
+        Vec3d motion = thrower.getLookVec().scale(1.6F).add(thrower.getMotion());
+        this.setRotation(this.rotationYaw, (float)Math.asin(-motion.y));
         this.setMotion(motion);
     }
 
     @Override
     protected void registerData() {
-        this.dataManager.register(PRIMER, 60);
+        this.dataManager.register(PRIMER, 65);
     }
 
     @Override
     public void tick() {
-        Vec3d adjustedMotion = new Vec3d(this.getMotion().x, this.getMotion().y-0.04D, this.getMotion().z);
+        Vec3d adjustedMotion = new Vec3d(this.getMotion().x, this.getMotion().y-0.03D, this.getMotion().z);
         this.move(MoverType.SELF, this.getMotion());
         if(this.onGround) {
-            this.setMotion(new Vec3d(this.getMotion().x*0.7D, -this.getMotion().y*0.98D, this.getMotion().z*0.7D));
+            this.setMotion(Vec3d.ZERO);
             this.setRotation(this.getYaw(1.0F), 0.0F);
         }else if(this.collidedHorizontally) {
             this.setMotion(new Vec3d(-this.getMotion().x, this.getMotion().y, -this.getMotion().z).scale(0.5D));
         }else {
-            this.setRotation(this.getYaw(1.0F), this.getPitch(1.0F)+7.5F);
             this.setMotion(adjustedMotion);
         }
         this.primer--;
         if(this.primer <= 0) {
             this.remove();
             if(!this.world.isRemote) {
-                CustomExplosion explosion = new CustomExplosion(this.world, this.getPosition(), this.power, 0.88F);
+                CustomExplosion explosion = new CustomExplosion(this.world, this.getPosition(), this.power, 0.85F);
                 explosion.explodeExcluding(this, SoundsList.DYNAMITE_BLAST);
             }
         }else {
             this.handleWaterMovement();
-            if(this.world.isRemote) {
-                this.world.addParticle(ParticleTypes.SMOKE, this.getPosX(), this.getPosY(), this.getPosZ(), 0.0D, 0.0D, 0.0D);
-            }
         }
     }
+
+    /*
+    All of these methods pasted from DynamiteEntity.
+     */
 
     @Override
     protected void readAdditional(CompoundNBT compound) {
