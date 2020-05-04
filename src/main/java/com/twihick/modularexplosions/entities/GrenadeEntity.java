@@ -28,7 +28,7 @@ public class GrenadeEntity extends Entity {
 
     public GrenadeEntity(World worldIn, PlayerEntity thrower) {
         this(worldIn);
-        this.setPositionAndRotation(thrower.getPosX(), thrower.getPosY()+thrower.getEyeHeight(), thrower.getPosZ(), thrower.getYaw(1.0F), 0.0F);
+        this.setPositionAndRotation(thrower.getPosX(), thrower.getPosY()+thrower.getEyeHeight()-0.2D, thrower.getPosZ(), thrower.getYaw(1.0F), 0.0F);
         Vec3d motion = thrower.getLookVec().scale(0.85F).add(thrower.getMotion());
         this.setRotation(this.rotationYaw, (float)Math.asin(-motion.y));
         this.setMotion(motion);

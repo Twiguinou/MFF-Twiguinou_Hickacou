@@ -34,7 +34,7 @@ public class DynamiteEntity extends Entity {
         this(worldIn);
         this.owner = thrower;
         this.power = power;
-        this.setPositionAndRotation(thrower.getPosX(), thrower.getPosY()+thrower.getEyeHeight(), thrower.getPosZ(), thrower.rotationYaw, 0.0F);
+        this.setPositionAndRotation(thrower.getPosX(), thrower.getPosY()+thrower.getEyeHeight()-0.2D, thrower.getPosZ(), thrower.rotationYaw, 0.0F);
         Vec3d motion = thrower.getLookVec().scale(speedFactor).add(thrower.getMotion());
         this.setMotion(motion);
     }
