@@ -59,13 +59,12 @@ public class ConfigurableBombBlock extends Block {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
         ItemStack itemstack = player.getHeldItem(handIn);
         Item item = itemstack.getItem();
         if(item != Items.FLINT_AND_STEEL && item != Items.FIRE_CHARGE) {
-            Minecraft.getInstance().displayGuiScreen(new ConfigurableBombScreen((ConfigurableBombTileEntity)worldIn.getTileEntity(pos)));
+            displayScreen((ConfigurableBombTileEntity)worldIn.getTileEntity(pos));
         }else {
             catchFire(state, worldIn, pos, p_225533_6_.getFace(), player);
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
@@ -112,6 +111,11 @@ public class ConfigurableBombBlock extends Block {
                 worldIn.removeBlock(blockpos, false);
             }
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void displayScreen(ConfigurableBombTileEntity bomb) {
+        Minecraft.getInstance().displayGuiScreen(new ConfigurableBombScreen(bomb));
     }
 
 }

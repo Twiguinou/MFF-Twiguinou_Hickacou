@@ -47,11 +47,10 @@ public class TimerBombBlock extends AbstractFacingAlignedBlock {
         return ShapeUtil.rotateShape(SHAPE, state.get(DIRECTION));
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult rtr) {
         if(!state.get(this.ACTIVATED).booleanValue()) {
-            Minecraft.getInstance().displayGuiScreen(new TimerBombScreen((TimerBombTileEntity) worldIn.getTileEntity(pos)));
+            displayScreen((TimerBombTileEntity)worldIn.getTileEntity(pos));
         }
         return ActionResultType.SUCCESS;
     }
@@ -71,6 +70,11 @@ public class TimerBombBlock extends AbstractFacingAlignedBlock {
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(ACTIVATED);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void displayScreen(TimerBombTileEntity bomb) {
+        Minecraft.getInstance().displayGuiScreen(new TimerBombScreen(bomb));
     }
 
 }
