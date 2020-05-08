@@ -39,7 +39,7 @@ public class BallisticMissileScreen extends Screen {
         this.buttonSave = this.addButton(new Button(leftCorner+10, topCorner+70, 40, 20, I18n.format("gui.button.modularexplosions.save"), button -> {
             if(this.xField.getText().length() > 0 && this.yField.getText().length() > 0 && this.zField.getText().length() > 0) {
                 this.missile.setTargetX(Integer.parseInt(this.xField.getText()));
-                this.missile.setTargetY(Integer.parseInt(this.yField.getText())/2);
+                this.missile.setTargetY((int)Math.sqrt(Integer.parseInt(this.yField.getText())));
                 this.missile.setTargetZ(Integer.parseInt(this.zField.getText()));
             }
         }));
