@@ -12,6 +12,8 @@ public class ModelsList {
 
     public static final AssociativeModel DYNAMITE = ClientRegistryMethods.buildModel(IDS.DYNAMITE.getValue(), ModelLocations.CUSTOMS);
     public static final AssociativeModel GRENADE = ClientRegistryMethods.buildModel(IDS.GRENADE.getValue(), ModelLocations.CUSTOMS);
+    public static final AssociativeModel BALLISTIC_MISSILE = ClientRegistryMethods.buildModel(IDS.BALLISTIC_MISSILE.getValue(), ModelLocations.CUSTOMS);
+    public static final AssociativeModel ROCKET_ENGINE = ClientRegistryMethods.buildModel(IDS.ROCKET_ENGINE.getValue(), ModelLocations.CUSTOMS);
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
@@ -21,7 +23,9 @@ public class ModelsList {
 
     private enum IDS {
         DYNAMITE("dynamite"),
-        GRENADE("grenade");
+        GRENADE("grenade"),
+        BALLISTIC_MISSILE("ballistic_missile"),
+        ROCKET_ENGINE("rocket_engine");
 
         private final String value;
         IDS(String label) {

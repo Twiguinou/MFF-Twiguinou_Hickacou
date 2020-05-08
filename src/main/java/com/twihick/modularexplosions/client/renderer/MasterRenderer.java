@@ -1,5 +1,6 @@
 package com.twihick.modularexplosions.client.renderer;
 
+import com.twihick.modularexplosions.client.renderer.entity.BallisticMissileEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.entity.DynamiteEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.entity.GrenadeEntityRenderer;
 import com.twihick.modularexplosions.client.renderer.tileentity.ConfigurableBombTileEntityRenderer;
@@ -15,6 +16,7 @@ public class MasterRenderer {
     public static void entities() {
         RenderingRegistry.registerEntityRenderingHandler(EntitiesList.DYNAMITE, DynamiteEntityRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(EntitiesList.GRENADE, GrenadeEntityRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntitiesList.BALLISTIC_MISSILE, BallisticMissileEntityRenderer::new);
     }
 
     public static void tileEntities() {

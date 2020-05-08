@@ -16,7 +16,11 @@
     "sounds": [ "modularexplosions:item/grenade_launcher/fire" ]
   },
   "block.explosions.bomb_generic": {
-    "subtitle": "subtitlbe.modularexplosions.bomb_generic",
+    "subtitle": "subtitle.modularexplosions.bomb_generic",
     "sounds": [ "modularexplosions:block/explosions/bomb_explosion_generic" ]
+  },
+  "entity.ballistic_missile.thrust": {
+    "subtitle": "subtitle.modularexplosions.ballistic_missile_thrust",
+    "sounds": [ "modularexplosions:entity/ballistic_missile/thrust" ]
   }
 }

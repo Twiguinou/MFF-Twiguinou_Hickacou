@@ -8,6 +8,7 @@
   "item.modularexplosions.explosive_belt": "Explosive Belt",
   "item.modularexplosions.grenade_launcher": "Grenade Launcher",
   "item.modularexplosions.grenade": "Grenade",
+  "item.modularexplosions.ballistic_missile": "Ballistic Missile",
   "gui.button.modularexplosions.widthPlus": "Width +",
   "gui.button.modularexplosions.widthMinus": "Width -",
   "gui.button.modularexplosions.heightPlus": "Height +",
@@ -15,10 +16,13 @@
   "gui.button.modularexplosions.more": "+",
   "gui.button.modularexplosions.less": "-",
   "gui.button.modularexplosions.activate": "Done",
+  "gui.button.modularexplosions.save": "Save",
+  "gui.button.modularexplosions.launch": "Launch",
   "subtitle.modularexplosions.dynamite_blast": "Dynamite blast sound effect",
   "subtitle.modularexplosions.grenade_launcher_reload": "Grenade launcher reload sound effect",
   "subtitle.modularexplosions.grenade_launcher_empty": "Grenade launcher empty sound effect",
   "subtitle.modularexplosions.grenade_launcher_fire": "Grenade launcher fire sound effect",
   "subtitle.modularexplosions.bomb_generic": "Generic bomb explosion sound effect",
+  "subtitle.modularexplosions.ballistic_missile_thrust": "Ballistic missile thrust sound effect",
   "key.modularexplosions.explode": "To explode yourself, but please don't"
 }

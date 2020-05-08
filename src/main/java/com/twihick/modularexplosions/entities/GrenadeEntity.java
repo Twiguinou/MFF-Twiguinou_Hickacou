@@ -63,7 +63,7 @@ public class GrenadeEntity extends Entity {
             }
         }else {
             this.setMotion(adjustedMotion);
-            this.calculateYaw(this.getMotion());
+            this.calculateYawAndPitch(this.getMotion());
         }
         this.primer--;
         if(this.primer <= 0) {
@@ -77,7 +77,7 @@ public class GrenadeEntity extends Entity {
         }
     }
 
-    private void calculateYaw(Vec3d vec) {
+    private void calculateYawAndPitch(Vec3d vec) {
         double vecX = vec.x;
         double vecY = vec.y;
         double vecZ = vec.z;

@@ -63,11 +63,6 @@ public class TimerBombScreen extends Screen {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-    }
-
-    @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
         this.renderBackground();
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);

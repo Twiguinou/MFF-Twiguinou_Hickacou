@@ -3,7 +3,8 @@ package com.twihick.modularexplosions.common.registry;
 public enum SoundLocations {
 
     BLOCK("block"),
-    ITEM("item");
+    ITEM("item"),
+    ENTITY("entity");
 
     private final String prefix;
 

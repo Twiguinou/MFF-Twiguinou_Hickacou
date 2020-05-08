@@ -15,6 +15,7 @@ public class ItemsList {
     public static final Item EXPLOSIVE_BELT = CommonRegistryMethods.buildItem(ExplosiveBeltItem.class, IDS.EXPLOSIVE_BELT.getValue());
     public static final Item GRENADE_LAUNCHER = CommonRegistryMethods.buildItem(GrenadeLauncherItem.class, IDS.GRENADE_LAUNCHER.getValue());
     public static final Item GRENADE = CommonRegistryMethods.buildItem(GrenadeItem.class, IDS.GRENADE.getValue());
+    public static final Item BALLISTIC_MISSILE = CommonRegistryMethods.buildItem(BallisticMissileItem.class, IDS.BALLISTIC_MISSILE.getValue());
 
     @SubscribeEvent
     public static void registerItems(final RegistryEvent.Register<Item> event) {
@@ -26,7 +27,8 @@ public class ItemsList {
         THROWABLE_DYNAMITE("throwable_dynamite"),
         EXPLOSIVE_BELT("explosive_belt"),
         GRENADE_LAUNCHER("grenade_launcher"),
-        GRENADE("grenade");
+        GRENADE("grenade"),
+        BALLISTIC_MISSILE("ballistic_missile");
 
         private final String value;
         IDS(String label) {
