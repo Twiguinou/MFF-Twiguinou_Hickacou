@@ -27,7 +27,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -117,16 +116,17 @@ public class BallisticMissileEntity extends Entity {
     @Override
     public void tick() {
         if(this.isLaunched()) {
+            if(!this.world.isRemote) {
+                if(runningTickForSound%6 == 0) {
+                    runningTickForSound = 0;
+                    this.world.playMovingSound((PlayerEntity)null, this, SoundsList.BALLISTIC_MISSILE_THRUST, SoundCategory.PLAYERS, 1.67F+this.rand.nextFloat(), this.rand.nextFloat()+(this.rand.nextFloat()*2));
+                }
+                runningTickForSound++;
+            }
             Vec3d adjustedMotion = new Vec3d(this.getMotion().x, this.getMotion().y-0.02D, this.getMotion().z);
             this.move(MoverType.SELF, this.getMotion());
             if(this.getStage() == 0) {
-                if(!this.world.isRemote) {
-                    if(runningTickForSound%6 == 0) {
-                        runningTickForSound = 0;
-                        this.world.playMovingSound((PlayerEntity)null, this, SoundsList.BALLISTIC_MISSILE_THRUST, SoundCategory.PLAYERS, 1.67F+this.rand.nextFloat(), this.rand.nextFloat()+(this.rand.nextFloat()*2));
-                    }
-                    runningTickForSound++;
-                }
+                this.generateParticles(12);
                 Vec3d motionWithPush = adjustedMotion.add(0.0D, 0.0215D, 0.0D);
                 motionWithPush = correctMotion(motionWithPush);
                 this.setMotion(motionWithPush);
@@ -134,19 +134,18 @@ public class BallisticMissileEntity extends Entity {
                     this.setStage(1);
                 }
             }else if(this.getStage() == 1) {
-                Vec3d vec3d = new Vec3d(this.getTargetX()-this.getPosX(), this.getTargetY()-this.getPosY(), this.getTargetZ()-this.getPosZ()).scale(0.0001F);
-                Vec3d motionWithPush = correctMotion(this.getMotion().add(vec3d));
+                Vec3d vec3d = new Vec3d(this.getTargetX()-this.getPosX(), this.getTargetY()-this.getPosY(), this.getTargetZ()-this.getPosZ()).normalize();
+                Vec3d motionWithPush = correctMotion(this.getMotion().add(vec3d.scale(0.02F)));
                 this.setMotion(motionWithPush);
                 if(this.collidedVertically) {
                     this.remove();
                     if(!this.world.isRemote) {
-                        CustomExplosion explosion = new CustomExplosion(this.world, this.getPosition(), 12, 0.89F);
+                        CustomExplosion explosion = new CustomExplosion(this.world, this.getPosition(), 25, 0.96F);
                         explosion.explodeExcluding(null, SoundsList.BOMB_GENERIC);
                     }
                 }
             }
             this.calculateYawAndPitch(this.getMotion());
-            this.generateParticles(12);
         }
     }
 
@@ -302,7 +301,10 @@ public class BallisticMissileEntity extends Entity {
         if(playerIn.isShiftKeyDown()) {
             return false;
         }
-        return this.displayScreen(this);
+        if(!this.world.isRemote) {
+            return this.displayScreen(this);
+        }
+        return false;
     }
 
     @Override

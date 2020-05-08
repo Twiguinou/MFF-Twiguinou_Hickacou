@@ -23,7 +23,6 @@ public class BallisticMissileEntityRenderer extends EntityRenderer<BallisticMiss
 
     public BallisticMissileEntityRenderer(EntityRendererManager renderManager) {
         super(renderManager);
-        renderManager.setDebugBoundingBox(true);
     }
 
     @Override

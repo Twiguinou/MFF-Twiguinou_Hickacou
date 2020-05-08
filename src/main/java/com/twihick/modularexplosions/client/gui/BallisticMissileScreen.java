@@ -11,7 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.StringUtils;
 
 @OnlyIn(Dist.CLIENT)
 public class BallisticMissileScreen extends Screen {
@@ -25,6 +24,7 @@ public class BallisticMissileScreen extends Screen {
     private Button buttonSave;
     private Button buttonLaunch;
     private TextFieldWidget xField;
+    private TextFieldWidget yField;
     private TextFieldWidget zField;
 
     public BallisticMissileScreen(BallisticMissileEntity missile) {
@@ -37,9 +37,11 @@ public class BallisticMissileScreen extends Screen {
         int leftCorner = (this.width-this.xSize) / 2;
         int topCorner = (this.height-this.ySize) / 2;
         this.buttonSave = this.addButton(new Button(leftCorner+10, topCorner+70, 40, 20, I18n.format("gui.button.modularexplosions.save"), button -> {
-            this.missile.setTargetX(Integer.parseInt(this.xField.getText()));
-            this.missile.setTargetY(0);
-            this.missile.setTargetZ(Integer.parseInt(this.zField.getText()));
+            if(this.xField.getText().length() > 0 && this.yField.getText().length() > 0 && this.zField.getText().length() > 0) {
+                this.missile.setTargetX(Integer.parseInt(this.xField.getText()));
+                this.missile.setTargetY(Integer.parseInt(this.yField.getText())/2);
+                this.missile.setTargetZ(Integer.parseInt(this.zField.getText()));
+            }
         }));
         this.buttonLaunch = this.addButton(new Button(leftCorner+70, topCorner+70, 40, 20, I18n.format("gui.button.modularexplosions.launch"), button -> {
             if(!this.missile.world.isRemote) {
@@ -50,12 +52,20 @@ public class BallisticMissileScreen extends Screen {
         this.xField = new TextFieldWidget(this.font, leftCorner+60, topCorner+10, 75, 10, "") {
             @Override
             public void writeText(String text) {
-                if(StringUtils.isNumeric(text) && text.length() <= 9) {
+                if(BallisticMissileScreen.this.isTextValid(text)) {
                     super.writeText(text);
                 }
             }
         };
-        this.zField = new TextFieldWidget(this.font, leftCorner+60, topCorner+25, 75, 10, "") {
+        this.yField = new TextFieldWidget(this.font, leftCorner+60, topCorner+25, 75, 10, "") {
+            @Override
+            public void writeText(String text) {
+                if(BallisticMissileScreen.this.isTextValid(text)) {
+                    super.writeText(text);
+                }
+            }
+        };
+        this.zField = new TextFieldWidget(this.font, leftCorner+60, topCorner+40, 75, 10, "") {
             @Override
             public void writeText(String text) {
                 if(BallisticMissileScreen.this.isTextValid(text)) {
@@ -64,6 +74,7 @@ public class BallisticMissileScreen extends Screen {
             }
         };
         this.children.add(this.xField);
+        this.children.add(this.yField);
         this.children.add(this.zField);
         this.buttonSave.active = !this.missile.isLaunched();
         this.buttonLaunch.active = !this.missile.isLaunched();
@@ -83,6 +94,7 @@ public class BallisticMissileScreen extends Screen {
     public void tick() {
         super.tick();
         this.xField.tick();
+        this.yField.tick();
         this.zField.tick();
         this.buttonSave.active = !this.missile.isLaunched();
         this.buttonLaunch.active = !this.missile.isLaunched();
@@ -98,10 +110,13 @@ public class BallisticMissileScreen extends Screen {
         this.blit(leftCorner, topCorner, 0, 0, this.xSize, this.ySize);
         super.render(mouseX, mouseY, partialTicks);
         String posX = "X: " + String.valueOf(this.missile.getTargetX());
+        String posY = "Y: " + String.valueOf(this.missile.getTargetY()*2);
         String posZ = "Z: " + String.valueOf(this.missile.getTargetZ());
         this.font.drawString(posX, ((leftCorner+this.xSize/2)-25)-40, topCorner+9, 0xFFFFFF);
-        this.font.drawString(posZ, ((leftCorner+this.xSize/2)-25)-40, topCorner+24, 0xFFFFFF);
+        this.font.drawString(posY, ((leftCorner+this.xSize/2)-25)-40, topCorner+24, 0xFFFFFF);
+        this.font.drawString(posZ, ((leftCorner+this.xSize/2)-25)-40, topCorner+39, 0xFFFFFF);
         this.xField.render(mouseX, mouseY, partialTicks);
+        this.yField.render(mouseX, mouseY, partialTicks);
         this.zField.render(mouseX, mouseY, partialTicks);
     }
 
