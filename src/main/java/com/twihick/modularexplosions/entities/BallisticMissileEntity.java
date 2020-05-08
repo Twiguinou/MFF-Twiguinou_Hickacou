@@ -34,9 +34,7 @@ import javax.annotation.Nullable;
 
 public class BallisticMissileEntity extends Entity {
 
-    private static final DataParameter<Integer> ORIGIN_X = EntityDataManager.createKey(BallisticMissileEntity.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> ORIGIN_Y = EntityDataManager.createKey(BallisticMissileEntity.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> ORIGIN_Z = EntityDataManager.createKey(BallisticMissileEntity.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> TARGET_X = EntityDataManager.createKey(BallisticMissileEntity.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> TARGET_Y = EntityDataManager.createKey(BallisticMissileEntity.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> TARGET_Z = EntityDataManager.createKey(BallisticMissileEntity.class, DataSerializers.VARINT);
@@ -61,9 +59,7 @@ public class BallisticMissileEntity extends Entity {
 
     @Override
     protected void registerData() {
-        this.dataManager.register(ORIGIN_X, (int)this.getPosX());
         this.dataManager.register(ORIGIN_Y, (int)this.getPosY());
-        this.dataManager.register(ORIGIN_Z, (int)this.getPosZ());
         this.dataManager.register(TARGET_X, (int)this.getPosX());
         this.dataManager.register(TARGET_Y, (int)this.getPosY());
         this.dataManager.register(TARGET_Z, (int)this.getPosZ());
@@ -121,6 +117,8 @@ public class BallisticMissileEntity extends Entity {
     @Override
     public void tick() {
         if(this.isLaunched()) {
+            Vec3d adjustedMotion = new Vec3d(this.getMotion().x, this.getMotion().y-0.02D, this.getMotion().z);
+            this.move(MoverType.SELF, this.getMotion());
             if(this.getStage() == 0) {
                 if(!this.world.isRemote) {
                     if(runningTickForSound%6 == 0) {
@@ -129,10 +127,6 @@ public class BallisticMissileEntity extends Entity {
                     }
                     runningTickForSound++;
                 }
-            }
-            Vec3d adjustedMotion = new Vec3d(this.getMotion().x, this.getMotion().y-0.02D, this.getMotion().z);
-            this.move(MoverType.SELF, this.getMotion());
-            if(this.getStage() == 0) {
                 Vec3d motionWithPush = adjustedMotion.add(0.0D, 0.0215D, 0.0D);
                 motionWithPush = correctMotion(motionWithPush);
                 this.setMotion(motionWithPush);
@@ -220,37 +214,29 @@ public class BallisticMissileEntity extends Entity {
 
     @Override
     protected void readAdditional(CompoundNBT compound) {
-        if(compound.contains("Origin X", Constants.NBT.TAG_INT)) {
-            this.setOriginX(compound.getInt("Origin X"));
-        }
-        if(compound.contains("Origin Y", Constants.NBT.TAG_INT)) {
+        if(compound.contains("Origin Y")) {
             this.setOriginY(compound.getInt("Origin Y"));
         }
-        if(compound.contains("Origin Z", Constants.NBT.TAG_INT)) {
-            this.setOriginZ(compound.getInt("Origin Z"));
-        }
-        if(compound.contains("Target X", Constants.NBT.TAG_INT)) {
+        if(compound.contains("Target X")) {
             this.setTargetX(compound.getInt("Target X"));
         }
-        if(compound.contains("Target Y", Constants.NBT.TAG_INT)) {
+        if(compound.contains("Target Y")) {
             this.setTargetY(compound.getInt("Target Y"));
         }
-        if(compound.contains("Target Z", Constants.NBT.TAG_INT)) {
+        if(compound.contains("Target Z")) {
             this.setTargetZ(compound.getInt("Target Z"));
         }
         if(compound.contains("Launched")) {
             this.setLaunched(compound.getBoolean("Launched"));
         }
-        if(compound.contains("Stage", Constants.NBT.TAG_INT)) {
+        if(compound.contains("Stage")) {
             this.setStage(compound.getInt("Stage"));
         }
     }
 
     @Override
     protected void writeAdditional(CompoundNBT compound) {
-        compound.putInt("Origin X", this.getOriginX());
         compound.putInt("Origin Y", this.getOriginY());
-        compound.putInt("Origin Z", this.getOriginZ());
         compound.putInt("Target X", this.getTargetX());
         compound.putInt("Target Y", this.getTargetY());
         compound.putInt("Target Z", this.getTargetZ());
@@ -258,28 +244,12 @@ public class BallisticMissileEntity extends Entity {
         compound.putInt("Stage", this.getStage());
     }
 
-    public void setOriginX(int x) {
-        this.dataManager.set(ORIGIN_X, x);
-    }
-
     public void setOriginY(int y) {
         this.dataManager.set(ORIGIN_Y, y);
     }
 
-    public void setOriginZ(int z) {
-        this.dataManager.set(ORIGIN_Z, z);
-    }
-
-    public int getOriginX() {
-        return this.dataManager.get(ORIGIN_X);
-    }
-
     public int getOriginY() {
         return this.dataManager.get(ORIGIN_Y);
-    }
-
-    public int getOriginZ() {
-        return this.dataManager.get(ORIGIN_Z);
     }
 
     public void setTargetX(int x) {
@@ -311,9 +281,7 @@ public class BallisticMissileEntity extends Entity {
             CustomExplosion explosion = new CustomExplosion(this.world, this.getPosition(), 4, 0.586F);
             explosion.explodeExcluding(this);
         }
-        this.setOriginX((int)this.getPosX());
         this.setOriginY((int)this.getPosY());
-        this.setOriginZ((int)this.getPosZ());
         this.dataManager.set(LAUNCHED, launched);
     }
 

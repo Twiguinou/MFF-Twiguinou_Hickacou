@@ -4,7 +4,7 @@ issueTrackerURL="http://my.issue.tracker/"
 
 [[mods]]
 modId="modularexplosions"
-version="1.0.0"
+version="1.1.0"
 displayName="Modular Explosions"
 updateJSONURL="http://myurl.me/"
 displayURL="https://cinqfoiscinq.fr/"

@@ -99,8 +99,8 @@ public class BallisticMissileScreen extends Screen {
         super.render(mouseX, mouseY, partialTicks);
         String posX = "X: " + String.valueOf(this.missile.getTargetX());
         String posZ = "Z: " + String.valueOf(this.missile.getTargetZ());
-        this.font.drawString(posX, ((leftCorner+this.xSize/2)-25)-40, topCorner+10, 0xFFFFFF);
-        this.font.drawString(posZ, ((leftCorner+this.xSize/2)-25)-40, topCorner+25, 0xFFFFFF);
+        this.font.drawString(posX, ((leftCorner+this.xSize/2)-25)-40, topCorner+9, 0xFFFFFF);
+        this.font.drawString(posZ, ((leftCorner+this.xSize/2)-25)-40, topCorner+24, 0xFFFFFF);
         this.xField.render(mouseX, mouseY, partialTicks);
         this.zField.render(mouseX, mouseY, partialTicks);
     }
