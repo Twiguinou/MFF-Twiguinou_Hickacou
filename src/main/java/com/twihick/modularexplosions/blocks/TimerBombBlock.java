@@ -1,13 +1,12 @@
 package com.twihick.modularexplosions.blocks;
 
-import com.twihick.modularexplosions.client.gui.TimerBombScreen;
+import com.twihick.modularexplosions.ops.ClientOperationSide;
 import com.twihick.modularexplosions.properties.ExtendedBlockStateProperties;
 import com.twihick.modularexplosions.tileentities.TimerBombTileEntity;
 import com.twihick.modularexplosions.util.ShapeUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -20,8 +19,6 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
@@ -50,7 +47,7 @@ public class TimerBombBlock extends AbstractFacingAlignedBlock {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult rtr) {
         if(!state.get(this.ACTIVATED).booleanValue()) {
-            displayScreen((TimerBombTileEntity)worldIn.getTileEntity(pos));
+            ClientOperationSide.Helpers.openTimerBombScreen(worldIn, pos);
         }
         return ActionResultType.SUCCESS;
     }
@@ -70,11 +67,6 @@ public class TimerBombBlock extends AbstractFacingAlignedBlock {
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(ACTIVATED);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void displayScreen(TimerBombTileEntity bomb) {
-        Minecraft.getInstance().displayGuiScreen(new TimerBombScreen(bomb));
     }
 
 }

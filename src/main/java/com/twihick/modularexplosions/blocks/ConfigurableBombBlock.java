@@ -1,14 +1,13 @@
 package com.twihick.modularexplosions.blocks;
 
-import com.twihick.modularexplosions.client.gui.ConfigurableBombScreen;
 import com.twihick.modularexplosions.common.registry.SoundsList;
+import com.twihick.modularexplosions.ops.ClientOperationSide;
 import com.twihick.modularexplosions.tileentities.ConfigurableBombTileEntity;
 import com.twihick.modularexplosions.util.world.CustomExplosion;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,8 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
@@ -64,7 +61,7 @@ public class ConfigurableBombBlock extends Block {
         ItemStack itemstack = player.getHeldItem(handIn);
         Item item = itemstack.getItem();
         if(item != Items.FLINT_AND_STEEL && item != Items.FIRE_CHARGE) {
-            displayScreen((ConfigurableBombTileEntity)worldIn.getTileEntity(pos));
+            ClientOperationSide.Helpers.openConfigurableBombScreen(worldIn, pos);
         }else {
             catchFire(state, worldIn, pos, p_225533_6_.getFace(), player);
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
@@ -111,11 +108,6 @@ public class ConfigurableBombBlock extends Block {
                 worldIn.removeBlock(blockpos, false);
             }
         }
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void displayScreen(ConfigurableBombTileEntity bomb) {
-        Minecraft.getInstance().displayGuiScreen(new ConfigurableBombScreen(bomb));
     }
 
 }

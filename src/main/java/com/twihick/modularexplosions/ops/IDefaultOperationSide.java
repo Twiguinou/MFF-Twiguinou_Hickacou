@@ -1,6 +1,7 @@
 package com.twihick.modularexplosions.ops;
 
 import com.twihick.modularexplosions.common.events.CommonEvents;
+import com.twihick.modularexplosions.packets.Packets;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 public interface IDefaultOperationSide {
 
     default void common(FMLCommonSetupEvent event) {
+        Packets.init();
         MinecraftForge.EVENT_BUS.register(new CommonEvents());
     }
 

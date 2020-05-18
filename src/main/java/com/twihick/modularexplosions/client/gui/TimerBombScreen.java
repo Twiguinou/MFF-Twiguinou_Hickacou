@@ -2,7 +2,8 @@ package com.twihick.modularexplosions.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.twihick.modularexplosions.StringID;
-import com.twihick.modularexplosions.blocks.TimerBombBlock;
+import com.twihick.modularexplosions.packets.Packets;
+import com.twihick.modularexplosions.packets.TimerBombPackets;
 import com.twihick.modularexplosions.tileentities.TimerBombTileEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -40,25 +41,25 @@ public class TimerBombScreen extends Screen {
         int leftCorner = (this.width-this.xSize) / 2;
         int topCorner = (this.height-this.ySize) / 2;
         this.buttonMoreMins = this.addButton(new Button((leftCorner+this.xSize/2)-30, topCorner+10,20,20, I18n.format("gui.button.modularexplosions.more"), button -> {
-            bomb.runningTicks+=1200;
+            Packets.INSTANCE.sendToServer(new TimerBombPackets.SetTicks(bomb.getPos(), bomb.runningTicks+1200));
         }));
         this.buttonLessMins = this.addButton(new Button((leftCorner+this.xSize/2)-30, topCorner+50,20,20, I18n.format("gui.button.modularexplosions.less"), button -> {
             if (bomb.computeTime()[0]-1 >= 0) {
-                bomb.runningTicks-=1200;
+                Packets.INSTANCE.sendToServer(new TimerBombPackets.SetTicks(bomb.getPos(), bomb.runningTicks-1200));
             }
         }));
         this.buttonMoreSecs = this.addButton(new Button((leftCorner+this.xSize/2)+10, topCorner+10,20,20, I18n.format("gui.button.modularexplosions.more"), button -> {
-                bomb.runningTicks+=20;
+            Packets.INSTANCE.sendToServer(new TimerBombPackets.SetTicks(bomb.getPos(), bomb.runningTicks+20));
         }));
         this.buttonLessSecs = this.addButton(new Button((leftCorner+this.xSize/2)+10, topCorner+50,20,20, I18n.format("gui.button.modularexplosions.less"), button -> {
             if (bomb.runningTicks-20 >= 0) {
-                bomb.runningTicks-=20;
+                Packets.INSTANCE.sendToServer(new TimerBombPackets.SetTicks(bomb.getPos(), bomb.runningTicks-20));
             }
         }));
         this.buttonActivate = this.addButton(new Button((leftCorner+this.xSize/2)-40, topCorner+75, 80, 20, I18n.format("gui.button.modularexplosions.activate"), button -> {
             this.minecraft.player.closeScreen();
-            bomb.runningTicks+=20;
-            bomb.getWorld().setBlockState(bomb.getPos(), bomb.getBlockState().with(TimerBombBlock.ACTIVATED, Boolean.valueOf(true)));
+            Packets.INSTANCE.sendToServer(new TimerBombPackets.SetTicks(bomb.getPos(), bomb.runningTicks+20));
+            Packets.INSTANCE.sendToServer(new TimerBombPackets.Activate(bomb.getPos()));
         }));
     }
 
