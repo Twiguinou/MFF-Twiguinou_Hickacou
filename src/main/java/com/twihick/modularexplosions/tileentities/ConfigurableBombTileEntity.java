@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
@@ -19,20 +20,19 @@ public class ConfigurableBombTileEntity extends TileEntity {
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        compound.putInt("width", this.width);
-        compound.putInt("height", this.height);
+        compound.putInt("Width", this.width);
+        compound.putInt("Height", this.height);
         return super.write(compound);
     }
-
 
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        if(compound.contains("width")) {
-            this.width = compound.getInt("width");
+        if(compound.contains("Width", Constants.NBT.TAG_INT)) {
+            this.width = compound.getInt("Width");
         }
-        if(compound.contains("height")) {
-            this.height = compound.getInt("height");
+        if(compound.contains("Height", Constants.NBT.TAG_INT)) {
+            this.height = compound.getInt("Height");
         }
     }
 

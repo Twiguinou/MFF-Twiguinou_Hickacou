@@ -9,11 +9,14 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Direction;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
 
 import java.util.Collection;
 import java.util.Random;
 
+@OnlyIn(Dist.CLIENT)
 public class ModelRendererUtil {
 
     public static void renderModel(IBakedModel model, MatrixStack matrix, IRenderTypeBuffer buffer, int light) {

@@ -36,7 +36,7 @@ public class RemoteBombTileEntity extends TileEntity implements ITickableTileEnt
 
     @Override
     public void tick() {
-        sync();
+        this.sync();
         if(this.getBlockState().get(RemoteBombBlock.ACTIVATED).booleanValue()) {
             this.world.setBlockState(this.getPos(), Blocks.AIR.getDefaultState());
             CustomExplosion explosion = new CustomExplosion(this.world, this.getPos(), 6, 0.764F);
@@ -75,7 +75,7 @@ public class RemoteBombTileEntity extends TileEntity implements ITickableTileEnt
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
+        return new SUpdateTileEntityPacket(this.getPos(), 0, this.getUpdateTag());
     }
 
     @Override

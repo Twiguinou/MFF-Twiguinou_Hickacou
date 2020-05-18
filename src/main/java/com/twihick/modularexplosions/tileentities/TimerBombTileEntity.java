@@ -13,6 +13,8 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 
@@ -26,6 +28,7 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
 
     @Override
     public void tick() {
+        this.sync();
         if(this.isBlockActivated()) {
             runningTicks--;
             if(runningTicks%20 == 0) {
@@ -63,6 +66,17 @@ public class TimerBombTileEntity extends TileEntity implements ITickableTileEnti
 
     public boolean isBlockActivated() {
         return this.getBlockState().get(TimerBombBlock.ACTIVATED).booleanValue();
+    }
+
+    public void sync() {
+        this.markDirty();
+        SUpdateTileEntityPacket packet = this.getUpdatePacket();
+        if(packet != null) {
+            if(this.world instanceof ServerWorld) {
+                ServerWorld serverWorld = (ServerWorld) world;
+                serverWorld.getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(this.getPos()), false).forEach(player -> player.connection.sendPacket(packet));
+            }
+        }
     }
 
     @Override

@@ -18,6 +18,7 @@
   "gui.button.modularexplosions.activate": "Finito",
   "gui.button.modularexplosions.save": "Salvare",
   "gui.button.modularexplosions.launch": "Attivare",
+  "gui.slider.modularexplosions.speed": "Velocità: ",
   "subtitle.modularexplosions.dynamite_blast": "Effetto sonoro del esplosione di dinamite",
   "subtitle.modularexplosions.grenade_launcher_reload": "Effetto sonoro dello ricaricare di lanciagranate",
   "subtitle.modularexplosions.grenade_launcher_empty": "Effetto sonoro dello rivista vuota",

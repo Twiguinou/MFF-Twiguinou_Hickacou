@@ -18,6 +18,7 @@
   "gui.button.modularexplosions.activate": "Done",
   "gui.button.modularexplosions.save": "Save",
   "gui.button.modularexplosions.launch": "Launch",
+  "gui.slider.modularexplosions.speed": "Speed: ",
   "subtitle.modularexplosions.dynamite_blast": "Dynamite blast sound effect",
   "subtitle.modularexplosions.grenade_launcher_reload": "Grenade launcher reload sound effect",
   "subtitle.modularexplosions.grenade_launcher_empty": "Grenade launcher empty sound effect",

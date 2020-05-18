@@ -2,12 +2,11 @@ package com.twihick.modularexplosions;
 
 import com.twihick.modularexplosions.common.registry.ItemsList;
 import com.twihick.modularexplosions.configs.CommonConfig;
-import com.twihick.modularexplosions.ops.ClientOperationSide;
+import com.twihick.modularexplosions.ops.IDefaultOperationSide;
 import com.twihick.modularexplosions.ops.ServerOperationSide;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -22,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class Main {
 
     private static Logger logger = LogManager.getLogger();
-    private static final ServerOperationSide ops = DistExecutor.runForDist(() -> ClientOperationSide::new, () -> ServerOperationSide::new);
+    private static final ServerOperationSide ops = IDefaultOperationSide.createInstance();
     private static final ItemGroup group = new ItemGroup(StringID.ID) {
         @Override
         public ItemStack createIcon() {

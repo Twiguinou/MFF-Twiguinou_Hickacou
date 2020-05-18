@@ -4,6 +4,7 @@ import com.twihick.modularexplosions.client.gui.BallisticMissileScreen;
 import com.twihick.modularexplosions.common.registry.EntitiesList;
 import com.twihick.modularexplosions.common.registry.SoundsList;
 import com.twihick.modularexplosions.util.world.CustomExplosion;
+import com.twihick.modularexplosions.util.world.WorldUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
@@ -22,9 +23,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -125,15 +128,15 @@ public class BallisticMissileEntity extends Entity {
             this.move(MoverType.SELF, this.getMotion());
             if(this.getStage() == 0) {
                 this.generateParticles(12);
-                Vec3d motionWithPush = adjustedMotion.add(0.0D, 0.0215D, 0.0D);
+                Vec3d motionWithPush = adjustedMotion.add(0.0D, 0.0225D, 0.0D);
                 motionWithPush = correctMotion(motionWithPush);
                 this.setMotion(motionWithPush);
-                if(this.getPosY() >= 250) {
+                if(this.getPosY() >= WorldUtil.getHighestBlockAtColumnPos(this.world, this.getPosX(), this.getPosZ())+95) {
                     this.setStage(1);
                 }
             }else if(this.getStage() == 1) {
                 Vec3d vec3d = new Vec3d(this.getTargetX()-this.getPosX(), this.getTargetY()-this.getPosY(), this.getTargetZ()-this.getPosZ()).normalize();
-                Vec3d motionWithPush = correctMotion(this.getMotion().add(vec3d.scale(0.02F)));
+                Vec3d motionWithPush = correctMotion(this.getMotion().add(vec3d.scale(0.015F)));
                 this.setMotion(motionWithPush);
                 if(this.collidedVertically) {
                     this.remove();
@@ -144,6 +147,11 @@ public class BallisticMissileEntity extends Entity {
                 }
             }
             this.calculateYawAndPitch(this.getMotion());
+        }else {
+            Vec3d adjustedMotion = new Vec3d(this.getMotion().x, this.getMotion().y-0.02D, this.getMotion().z);
+            adjustedMotion = correctMotion(adjustedMotion);
+            this.setMotion(adjustedMotion);
+            this.move(MoverType.SELF, this.getMotion());
         }
     }
 

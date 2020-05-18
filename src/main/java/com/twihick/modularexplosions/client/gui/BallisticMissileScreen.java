@@ -8,6 +8,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -110,7 +111,7 @@ public class BallisticMissileScreen extends Screen {
         this.blit(leftCorner, topCorner, 0, 0, this.xSize, this.ySize);
         super.render(mouseX, mouseY, partialTicks);
         String posX = "X: " + String.valueOf(this.missile.getTargetX());
-        String posY = "Y: " + String.valueOf(this.missile.getTargetY()*2);
+        String posY = "Y: " + String.valueOf(MathHelper.ceil(Math.pow(this.missile.getTargetY(), 2)));
         String posZ = "Z: " + String.valueOf(this.missile.getTargetZ());
         this.font.drawString(posX, ((leftCorner+this.xSize/2)-25)-40, topCorner+9, 0xFFFFFF);
         this.font.drawString(posY, ((leftCorner+this.xSize/2)-25)-40, topCorner+24, 0xFFFFFF);
