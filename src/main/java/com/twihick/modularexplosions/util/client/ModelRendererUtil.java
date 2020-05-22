@@ -21,13 +21,16 @@ public class ModelRendererUtil {
 
     public static void renderModel(IBakedModel model, MatrixStack matrix, IRenderTypeBuffer buffer, int light) {
         matrix.push();
-        ForgeHooksClient.handleCameraTransforms(matrix, model, ItemCameraTransforms.TransformType.NONE, false);
+        model = ForgeHooksClient.handleCameraTransforms(matrix, model, ItemCameraTransforms.TransformType.NONE, false);
         matrix.translate(-0.5D, -0.5D, -0.5D);
         IVertexBuilder builder = buffer.getBuffer(Atlases.getSolidBlockType());
+        Random rnd = new Random();
         for(Direction direction : Direction.values()) {
-            renderQuads(matrix, builder, model.getQuads(null, direction, new Random()), light);
+            rnd.setSeed(42L);
+            renderQuads(matrix, builder, model.getQuads(null, direction, rnd), light);
         }
-        renderQuads(matrix, builder, model.getQuads(null, null, new Random()), light);
+        rnd.setSeed(42L);
+        renderQuads(matrix, builder, model.getQuads(null, null, rnd), light);
         matrix.pop();
     }
 
